@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="427.0" prefWidth="423.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="427.0" prefWidth="423.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.LoginController">
    <children>
       <BorderPane prefHeight="427.0" prefWidth="426.0">
          <top>
@@ -42,13 +42,13 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <TextField GridPane.columnIndex="1" />
-                        <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtUsername" GridPane.columnIndex="1" />
+                        <PasswordField fx:id="txtPassword" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label text="Mật khẩu" GridPane.rowIndex="1" />
                         <Label text="Tài khoản" />
                      </children>
                   </GridPane>
-                  <Button layoutX="157.0" layoutY="265.0" mnemonicParsing="false" text="Đăng nhập" />
+                  <Button fx:id="btnLogin" layoutX="157.0" layoutY="265.0" mnemonicParsing="false" onAction="#executeLogin" text="Đăng nhập" />
                   <Separator layoutX="114.0" layoutY="88.0" prefWidth="200.0" />
                   <Label layoutX="176.0" layoutY="29.0" text="Bank App" />
                </children>

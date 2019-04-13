@@ -20,68 +20,67 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class SearchCtl implements Initializable {
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-    }
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+	}
 
-    @FXML
-    private Button btnSearch;
+	@FXML
+	private Button btnSearch;
 
-    @FXML
-    private ChoiceBox cbType;
+	@FXML
+	private ChoiceBox cbType;
 
-    @FXML
-    private TextField searchKeyWord;
+	@FXML
+	private TextField searchKeyWord;
 
-    @FXML
-    private TableView tableSearchResult;
+	@FXML
+	private TableView tableSearchResult;
 
-    @FXML
-    private TableColumn column1Rs;
+	@FXML
+	private TableColumn column1Rs;
 
-    @FXML
-    private TableColumn column2Rs;
+	@FXML
+	private TableColumn column2Rs;
 
-    @FXML
-    private TableColumn column3Rs;
+	@FXML
+	private TableColumn column3Rs;
 
-    @FXML
-    private TableColumn column4Rs;
+	@FXML
+	private TableColumn column4Rs;
 
-    @FXML
-    public void btnSearchClick(ActionEvent event) {
-        try {
+	@FXML
+	public void btnSearchClick(ActionEvent event) {
+		try {
 
-            String searchType= cbType.getSelectionModel().getSelectedItem().toString();
-            String keyWord= searchKeyWord.getText();
+			String searchType = cbType.getSelectionModel().getSelectedItem().toString();
+			String keyWord = searchKeyWord.getText();
 
-            SearchResult searchResult = Providers.searchLoanRecord(searchType, keyWord);
-            System.out.println(searchResult.getLoanID());
-            System.out.println(searchResult.getAccID());
-            System.out.println(searchResult.getPersonname());
-            System.out.println(searchResult.getAmount());
+			SearchResult searchResult = Providers.searchLoanRecord(searchType, keyWord);
+			System.out.println(searchResult.getLoanID());
+			System.out.println(searchResult.getAccID());
+			System.out.println(searchResult.getPersonname());
+			System.out.println(searchResult.getAmount());
 
-            tableSearchResult.getItems().clear();
+			tableSearchResult.getItems().clear();
 
-            column1Rs.setCellValueFactory(new PropertyValueFactory<>("loanID"));
-            column2Rs.setCellValueFactory(new PropertyValueFactory<>("accID"));
-            column3Rs.setCellValueFactory(new PropertyValueFactory<>("personname"));
-            column4Rs.setCellValueFactory(new PropertyValueFactory<>("amount"));
+			column1Rs.setCellValueFactory(new PropertyValueFactory<>("loanID"));
+			column2Rs.setCellValueFactory(new PropertyValueFactory<>("accID"));
+			column3Rs.setCellValueFactory(new PropertyValueFactory<>("personname"));
+			column4Rs.setCellValueFactory(new PropertyValueFactory<>("amount"));
 
-            tableSearchResult.getItems().add(searchResult);
+			tableSearchResult.getItems().add(searchResult);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        catch(NullPointerException e1){
-            Alert alert=new Alert(Alert.AlertType.INFORMATION);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e1) {
+			Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
-            alert.setTitle("");
-            alert.setHeaderText("Loan not found!");
+			alert.setTitle("");
+			alert.setHeaderText("Loan not found!");
 
-            alert.showAndWait();
+			alert.showAndWait();
 
-            return;
-        }
-    }
+			return;
+		}
+	}
 }

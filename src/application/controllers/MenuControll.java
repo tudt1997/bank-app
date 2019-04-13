@@ -19,12 +19,12 @@ public class MenuControll implements Initializable {
 
 	@FXML
 	Label txtUser;
-	
+
 	@FXML
 	public void executeRegisterClick(ActionEvent event) {
 		Parent root;
 		try {
-			root = (Parent) FXMLLoader.load((LoginUI.class.getResource("view/DangKyVay.fxml")));
+			root = (Parent) FXMLLoader.load((LoginUI.class.getResource("view/LoanRegistration.fxml")));
 
 			Stage stage = new Stage();
 
@@ -41,12 +41,12 @@ public class MenuControll implements Initializable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@FXML
 	public void searchLoan(ActionEvent event) {
 		Parent root;
 		try {
-			root = (Parent) FXMLLoader.load((LoginUI.class.getResource("view/TimKiem.fxml")));
+			root = (Parent) FXMLLoader.load((LoginUI.class.getResource("view/Search.fxml")));
 
 			Stage stage = new Stage();
 
@@ -69,9 +69,9 @@ public class MenuControll implements Initializable {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	public void initData(String strUser) {
-		txtUser.setText("Hello "+strUser+"!");
+		txtUser.setText("Hello " + strUser + "!");
 	}
 
 }

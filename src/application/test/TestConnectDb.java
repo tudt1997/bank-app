@@ -1,4 +1,4 @@
-package application.controllers;
+package application.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,12 +16,14 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import application.controllers.Providers;
+
 class TestConnectDb {
 	private Connection connection = Providers.getConnection();
-	
+
 	@BeforeEach
 	private void setUp() {
-		
+
 		try {
 			connection.setAutoCommit(false);
 		} catch (SQLException e) {
@@ -40,7 +42,7 @@ class TestConnectDb {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Test
 	void testLoginSuccess() {
 
@@ -91,12 +93,12 @@ class TestConnectDb {
 					+ "and InterestPaySchedule='Khác' and PaymentMethod='Tự động trừ tài khoản' "
 					+ "and WithdrawalFundMethod='Tiền mặt'";
 
-			//System.out.println(query);
-			
-			Statement stmt=Providers.connection.createStatement();
-			
-			ResultSet rs=stmt.executeQuery(query);
-			
+			// System.out.println(query);
+
+			Statement stmt = Providers.connection.createStatement();
+
+			ResultSet rs = stmt.executeQuery(query);
+
 			assertEquals(true, rs.next());
 
 		} catch (SQLException e) {
@@ -107,7 +109,7 @@ class TestConnectDb {
 
 				Providers.connection.rollback();
 
-				Providers.connection.close();
+//				Providers.connection.close();
 
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -117,20 +119,21 @@ class TestConnectDb {
 		}
 
 	}
-	
+
 	@Test
 	void getRsLoan() {
 		try {
-			ResultSet rs=Providers.getRsLoan("Vay theo món", "Vay tiêu dùng không tài sản đảm bảo", 1000000, new Date(119, 3, 10).toString(), new Date(120, 3, 24).toString());
-			
-			int count=0;
-			
+			ResultSet rs = Providers.getRsLoan("Vay theo món", "Vay tiêu dùng không tài sản đảm bảo", 1000000,
+					new Date(119, 3, 10).toString(), new Date(120, 3, 24).toString());
+
+			int count = 0;
+
 			do {
 				count++;
-			}while(rs.next());
-			
+			} while (rs.next());
+
 			System.out.println(count);
-			
+
 			assertEquals(1, count);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -142,16 +145,49 @@ class TestConnectDb {
 	@Test
 	void getResultSetCareer() {
 		try {
-			ResultSet rs=Providers.getResultSetCareer(1);
-			
-			int count=0;
-			
+			ResultSet rs = Providers.getResultSetCareer(1);
+
+			int count = 0;
+
 			do {
 				count++;
-			}while(rs.next());
-			
+			} while (rs.next());
+
 			assertEquals(1, count);
-			
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	@Test
+	void getResultSetPerson() {
+		try {
+			ResultSet rs = Providers.getResultSetPerson("Nguyễn Đức Anh", "Male", "123456",
+					new Date(119, 2, 11).toString(), "376 Thụy Khuê Hà Nội", "123456789");
+
+			int count = 0;
+
+			do {
+				count++;
+			} while (rs.next());
+
+			assertEquals(1, count);
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Test
+	void checkNameBaseName1() {
+
+		try {
+			assertEquals(true, Providers.checkNameBaseName(1, "Nguyễn Đức Anh"));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -160,61 +196,68 @@ class TestConnectDb {
 	}
 	
 	@Test
-	void getResultSetPerson() {
+	void checkNameBaseName2() {
+
 		try {
-			ResultSet rs=Providers.getResultSetPerson("Nguyễn Đức Anh", "Male", "123456", new Date(119,2,11).toString(), "42 Trần Phú Hà Đông Hà Nội", "123456789");
-			
-			int count=0;
-			
-			do {
-				count++;
-			}while(rs.next());
-			
-			assertEquals(1, count);
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-	
-	@Test
-	void checkNameBaseName() {
-		
-		try {
-			assertEquals(true, Providers.checkNameBaseName(1, "Nguyễn Đức Anh"));
+			assertEquals(false, Providers.checkNameBaseName(1, "Doãn Tuấn Tú"));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 	
 	@Test
-	void checkAddressBaseId() {
-		
+	void checkAddressBaseId1() {
+
 		try {
 			assertEquals(true, Providers.checkAddressBaseId(1, "42 Trần Phú Hà Đông Hà Nội"));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 	
 	@Test
-	void checkPersonAvailable() {
-		
+	void checkAddressBaseId2() {
+
 		try {
-			
-			assertEquals(true, Providers.checkPersonAvailable("Nguyễn Đức Anh", "Male", "123456", new Date(119,2,11).toString(), "42 Trần Phú Hà Đông Hà Nội", "123456789"));
-			
+			assertEquals(false, Providers.checkAddressBaseId(1, "376 Thụy Khuê Hà Nội"));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 	
+	@Test
+	void checkPersonAvailable1() {
+
+		try {
+
+			assertEquals(true, Providers.checkPersonAvailable("Nguyễn Đức Anh", "Male", "123456",
+					new Date(119, 2, 11).toString(), "42 Trần Phú Hà Đông Hà Nội", "123456789"));
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	@Test
+	void checkPersonAvailable2() {
+
+		try {
+
+			assertEquals(false, Providers.checkPersonAvailable("Doãn Tuấn Tú", "Male", "234567",
+					new Date(1997, 11, 26).toString(), "376 Thụy Khuê Hà Nội", "234567890"));
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 }

@@ -45,7 +45,7 @@
 						</AnchorPane>
 					</content>
 				</Tab>
-				<Tab id="tab2" fx:id="tp2" text="Thông tin nghề nghiệp">
+				<Tab id="tab2" fx:id="tp2" disable="true" text="Thông tin nghề nghiệp">
 					<content>
 						<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
 							<children>
@@ -81,7 +81,7 @@
 						</AnchorPane>
 					</content>
 				</Tab>
-				<Tab id="tab3" fx:id="tp1" text="Thông tin khoản vay">
+				<Tab id="tab3" fx:id="tp1" disable="true" text="Thông tin khoản vay">
 					<content>
 						<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
 							<children>
@@ -132,7 +132,7 @@
 			</tabs>
 		</TabPane>
 		<Button id="btnNext" fx:id="btnNext" layoutX="430.0" layoutY="458.0" mnemonicParsing="false" onAction="#executeNext" text="Tiếp tục" />
-		<Button id="btnBack" layoutX="327.0" layoutY="458.0" mnemonicParsing="false" onAction="#executePrev" text="Quay lại" />
-		<Button id="btnFinish" layoutX="531.0" layoutY="458.0" mnemonicParsing="false" onAction="#executeAdd" text="Hoàn tất" />
+		<Button id="btnBack" fx:id="btnPrev" disable="true" layoutX="327.0" layoutY="458.0" mnemonicParsing="false" onAction="#executePrev" text="Quay lại" />
+		<Button id="btnFinish" fx:id="btnFinish" disable="true" layoutX="531.0" layoutY="458.0" mnemonicParsing="false" onAction="#executeAdd" text="Hoàn tất" />
 	</children>
 </AnchorPane>

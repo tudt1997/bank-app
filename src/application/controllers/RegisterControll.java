@@ -37,10 +37,17 @@ public class RegisterControll implements Initializable {
 
 	@FXML
 	private Tab tp3;
-
+	
+	@FXML
+	private Button btnPrev;
+	
 	@FXML
 	private Button btnNext;
 
+	@FXML
+	private Button btnFinish;
+	
+	// tab 1
 	@FXML
 	private TextField txtName;
 
@@ -77,53 +84,53 @@ public class RegisterControll implements Initializable {
 
 	@FXML
 	private TextField txtAsset;
-	
-	//tab3
-	
+
+	// tab3
+
 	@FXML
 	private ChoiceBox<String> cbTypeLoan;
-	
+
 	@FXML
 	private ChoiceBox<String> cbTypePurposeLoan;
-	
+
 	@FXML
 	private TextField txtMoneyLoan;
-	
+
 	@FXML
 	private DatePicker dtStartDateLoan;
-	
+
 	@FXML
 	private DatePicker dtEndDate;
-	
+
 	@FXML
 	private ChoiceBox<String> cbPayOriginalDebt;
-	
+
 	@FXML
 	private ChoiceBox<String> cbInterestPay;
-	
+
 	@FXML
 	private ChoiceBox<String> cbPaymentMethod;
-	
+
 	@FXML
 	private ChoiceBox<String> cbWithdrawalFundMethod;
 
 	@FXML
 	public void executeNext() {
 
-		if(checkTabFirst()) {
-			try {
-				fillTabSecond();
-				
-				SingleSelectionModel<Tab> model = tpParent.getSelectionModel();
+//		if (checkTabFirst()) {
+		if (true) {
+			tp1.setDisable(true);
+			tp2.setDisable(false);
+//			tpParent.getSelectionModel().select(tp2);
+			btnPrev.setDisable(false);
+			
+//				fillTabSecond();
 
-				model.selectNext();
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			SingleSelectionModel<Tab> model = tpParent.getSelectionModel();
+
+			model.selectNext();
 		}
-		
+
 	}
 
 	public boolean checkTabFirst() {
@@ -149,7 +156,7 @@ public class RegisterControll implements Initializable {
 						txtIdCard.getText(), dt, txtAddressPerson.getText(), txtPhoneNumber.getText())) {
 
 					return true;
-					
+
 				} else {
 					Alert alert = new Alert(AlertType.WARNING);
 
@@ -184,40 +191,40 @@ public class RegisterControll implements Initializable {
 
 	public void fillTabSecond() throws SQLException {
 
-			SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
 
-			String dt = "";
+		String dt = "";
 
-			try {
+		try {
 
-				dt = ft.format(ft.parse(dtBirthday.getValue().toString()));
+			dt = ft.format(ft.parse(dtBirthday.getValue().toString()));
 
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			ResultSet rs=Providers.getResultSetPerson(txtName.getText(), cbGender.getValue().toString(),
-						txtIdCard.getText(), dt, txtAddressPerson.getText(), txtPhoneNumber.getText());
-			
-			int idCareer=(rs!=null)?rs.getInt(4):0;
-			
-			System.out.println(idCareer);
-			
-			ResultSet rsCareer=Providers.getResultSetCareer(idCareer);
-			
-			txtOrganization.setText(rsCareer.getString(2));
-			
-			txtAddressOrganization.setText(rsCareer.getString(3));
-			
-			txtPlaceOfWork.setText(rsCareer.getString(4));
-			
-			txtIncomePerMonth.setText(rsCareer.getString(5));
-			
-			txtSpendPerMonth.setText(rsCareer.getString(6));
-			
-			txtAsset.setText(rs.getString(11));
-			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// ResultSet rs = Providers.getResultSetPerson(txtName.getText(), cbGender.getValue().toString(),
+		//		txtIdCard.getText(), dt, txtAddressPerson.getText(), txtPhoneNumber.getText());
+		ResultSet rs = Providers.getResultSetPersonById(txtIdCard.getText());
+		
+		int idCareer = (rs != null) ? rs.getInt(4) : 0;
+
+		System.out.println(idCareer);
+
+		ResultSet rsCareer = Providers.getResultSetCareer(idCareer);
+
+		txtOrganization.setText(rsCareer.getString(2));
+
+		txtAddressOrganization.setText(rsCareer.getString(3));
+
+		txtPlaceOfWork.setText(rsCareer.getString(4));
+
+		txtIncomePerMonth.setText(rsCareer.getString(5));
+
+		txtSpendPerMonth.setText(rsCareer.getString(6));
+
+		txtAsset.setText(rs.getString(11));
 
 	}
 
@@ -238,188 +245,178 @@ public class RegisterControll implements Initializable {
 		cbGender.getItems().addAll("Male", "Female");
 
 		cbGender.getSelectionModel().select(0);
-		
-		
-		//Tab 3
-		
+
+		// Tab 3
+
 		cbTypeLoan.getItems().removeAll(cbTypeLoan.getItems());
-		
-		cbTypeLoan.getItems().addAll("Vay theo món","Theo hạn mức tín dụng"
-				,"Vay thấu chi");
-		
+
+		cbTypeLoan.getItems().addAll("Vay theo món", "Theo hạn mức tín dụng", "Vay thấu chi");
+
 		cbTypePurposeLoan.getItems().removeAll(cbTypePurposeLoan.getItems());
-		
-		cbTypePurposeLoan.getItems().addAll("Vay nhu cầu nhà ở","Vay mua ô tô",
-				"Vay du học","Vay sản xuất kinh doanh","Vay tiêu dùng không tài sản đảm bảo",
-				"Vay tiêu dùng có tài sản đảm bảo");
-		
+
+		cbTypePurposeLoan.getItems().addAll("Vay nhu cầu nhà ở", "Vay mua ô tô", "Vay du học",
+				"Vay sản xuất kinh doanh", "Vay tiêu dùng không tài sản đảm bảo", "Vay tiêu dùng có tài sản đảm bảo");
+
 		cbPayOriginalDebt.getItems().removeAll(cbPayOriginalDebt.getItems());
-		
-		cbPayOriginalDebt.getItems().addAll("Hàng tháng","Hàng quý","Bán niên", 
-				"1 lần vào cuối kỳ");
-		
+
+		cbPayOriginalDebt.getItems().addAll("Hàng tháng", "Hàng quý", "Bán niên", "1 lần vào cuối kỳ");
+
 		cbInterestPay.getItems().removeAll(cbInterestPay.getItems());
-		
-		cbInterestPay.getItems().addAll("Hàng tháng","Khác");
-		
+
+		cbInterestPay.getItems().addAll("Hàng tháng", "Khác");
+
 		cbWithdrawalFundMethod.getItems().removeAll(cbWithdrawalFundMethod.getItems());
-		
-		cbWithdrawalFundMethod.getItems().addAll("Tiền mặt","Chuyển khoản");
-		
+
+		cbWithdrawalFundMethod.getItems().addAll("Tiền mặt", "Chuyển khoản");
+
 		cbPaymentMethod.getItems().removeAll(cbPaymentMethod.getItems());
-		
-		cbPaymentMethod.getItems().addAll("Tự động trừ tài khoản","Nộp tiền mặt hoặc chuyển khoản");
-		
+
+		cbPaymentMethod.getItems().addAll("Tự động trừ tài khoản", "Nộp tiền mặt hoặc chuyển khoản");
+
 	}
-	
+
 	@FXML
 	public void executeAdd() {
-		String TypeLoan=cbTypeLoan.getValue();
-		
-		String TypePurposeLoan=cbTypePurposeLoan.getValue();
-		
-		double MoneyLoan=0;
-		
+		String TypeLoan = cbTypeLoan.getValue();
+
+		String TypePurposeLoan = cbTypePurposeLoan.getValue();
+
+		double MoneyLoan = 0;
+
 		try {
-			
-			MoneyLoan=Double.valueOf(txtMoneyLoan.getText());
-			
+
+			MoneyLoan = Double.valueOf(txtMoneyLoan.getText());
+
 			java.sql.Date StartDateLoan = null;
-			
-			if(dtStartDateLoan.getValue()!=null) {
-				StartDateLoan=java.sql.Date.valueOf(dtStartDateLoan.getValue());
-			}
-			else {
-				Alert alert=new Alert(AlertType.ERROR);
-				
+
+			if (dtStartDateLoan.getValue() != null) {
+				StartDateLoan = java.sql.Date.valueOf(dtStartDateLoan.getValue());
+			} else {
+				Alert alert = new Alert(AlertType.ERROR);
+
 				alert.setTitle("");
-				
+
 				alert.setHeaderText("Wrong start date!");
-				
+
 				alert.setContentText("Please enter again!");
-				
+
 				alert.showAndWait();
-				
+
 				return;
-				
+
 			}
-			
+
 			java.sql.Date EndDate = null;
-			
-			if(dtEndDate.getValue()!=null) {
-				
-				EndDate=java.sql.Date.valueOf(dtEndDate.getValue());
-				
-			}else {
-				Alert alert=new Alert(AlertType.ERROR);
-				
+
+			if (dtEndDate.getValue() != null) {
+
+				EndDate = java.sql.Date.valueOf(dtEndDate.getValue());
+
+			} else {
+				Alert alert = new Alert(AlertType.ERROR);
+
 				alert.setTitle("");
-				
+
 				alert.setHeaderText("Wrong end date!");
-				
+
 				alert.setContentText("Please enter again!");
-				
+
 				alert.showAndWait();
-				
-				
+
 				return;
 			}
-			
-			String PayOriginalDebt=cbPayOriginalDebt.getValue();
-			
-			String InterestPay=cbInterestPay.getValue();
-			
-			String PaymentMethod=cbPaymentMethod.getValue();
-			
-			String WithdrawalFundMethod=cbWithdrawalFundMethod.getValue();
-			
-			ResultSet rs=Providers.getRsLoan(TypeLoan, TypePurposeLoan, MoneyLoan, StartDateLoan.toString(), EndDate.toString());
-			
+
+			String PayOriginalDebt = cbPayOriginalDebt.getValue();
+
+			String InterestPay = cbInterestPay.getValue();
+
+			String PaymentMethod = cbPaymentMethod.getValue();
+
+			String WithdrawalFundMethod = cbWithdrawalFundMethod.getValue();
+
+			ResultSet rs = Providers.getRsLoan(TypeLoan, TypePurposeLoan, MoneyLoan, StartDateLoan.toString(),
+					EndDate.toString());
+
 			ResultSet rsPerson;
-			
-			if(rs==null) {
-				Alert alert=new Alert(AlertType.ERROR);
-				
+
+			if (rs == null) {
+				Alert alert = new Alert(AlertType.ERROR);
+
 				alert.setTitle("");
-				
+
 				alert.setHeaderText("Information is not available/Incorrect!");
-				
+
 				alert.setContentText("Please enter again!");
-				
+
 				alert.showAndWait();
-				
+
 				return;
-				
-			}
-			else {
-				
+
+			} else {
+
 				String dt = "";
-				
+
 				SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
-				
+
 				dt = ft.format(ft.parse(dtBirthday.getValue().toString()));
-				
-				rsPerson=Providers.getResultSetPerson(txtName.getText(), cbGender.getValue().toString(),
+
+				rsPerson = Providers.getResultSetPerson(txtName.getText(), cbGender.getValue().toString(),
 						txtIdCard.getText(), dt, txtAddressPerson.getText(), txtPhoneNumber.getText());
-				
+
 				ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
 				ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
-				Alert alertYs = new Alert(AlertType.WARNING,
-				        "Do you really want to register?",
-				        yes,
-				        no);
+				Alert alertYs = new Alert(AlertType.WARNING, "Do you really want to register?", yes, no);
 
 				alertYs.setTitle("Date format warning");
 				Optional<ButtonType> resultPt = alertYs.showAndWait();
 
-				int result=0;
-				
+				int result = 0;
+
 				if (resultPt.orElse(no) == yes) {
-					
-					result=Providers.addRecordLoan(rs.getInt(1), rsPerson.getInt(1), MoneyLoan, StartDateLoan, EndDate, 
-							PayOriginalDebt, InterestPay, PaymentMethod, WithdrawalFundMethod);
-					
+
+					result = Providers.addRecordLoan(rs.getInt(1), rsPerson.getInt(1), MoneyLoan, StartDateLoan,
+							EndDate, PayOriginalDebt, InterestPay, PaymentMethod, WithdrawalFundMethod);
+
 				}
-				
-				System.out.println("Number of rows is effected "+result);
-				
-				if(result!=0) {
+
+				System.out.println("Number of rows is effected " + result);
+
+				if (result != 0) {
 					Alert alert = new Alert(AlertType.INFORMATION);
-			        alert.setTitle("Register");
-			        alert.setHeaderText("Results:");
-			        alert.setContentText("Register successfully!");
-			 
-			        alert.showAndWait();
+					alert.setTitle("Register");
+					alert.setHeaderText("Results:");
+					alert.setContentText("Register successfully!");
+
+					alert.showAndWait();
 				}
-				
+
 			}
-			
+
 		} catch (SQLException e) {
 			// TODO: handle exception
-			
+
 			e.printStackTrace();
-			
+
 			return;
-		}catch(NumberFormatException e) {
-			
-			Alert alert=new Alert(AlertType.ERROR);
-			
+		} catch (NumberFormatException e) {
+
+			Alert alert = new Alert(AlertType.ERROR);
+
 			alert.setTitle("");
-			
+
 			alert.setHeaderText("Wrong money!");
-			
+
 			alert.setContentText("Please enter again!");
-			
+
 			alert.showAndWait();
-			
+
 			return;
-			
+
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 	}
 
 }

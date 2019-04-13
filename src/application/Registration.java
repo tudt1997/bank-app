@@ -10,25 +10,25 @@ public class Registration extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			/*BorderPane root = new BorderPane();
-			Scene scene = new Scene(root,400,400);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(scene);
-			primaryStage.show();*/
-			
-			AnchorPane home=(AnchorPane)FXMLLoader.load((getClass().getResource("view/DangKyVay.fxml")));
-			
+			/*
+			 * BorderPane root = new BorderPane(); Scene scene = new Scene(root,400,400);
+			 * scene.getStylesheets().add(getClass().getResource("application.css").
+			 * toExternalForm()); primaryStage.setScene(scene); primaryStage.show();
+			 */
+
+			AnchorPane home = (AnchorPane) FXMLLoader.load((getClass().getResource("view/LoanRegistration.fxml")));
+
 			primaryStage.setTitle("Đăng ký vay");
-			
+
 			primaryStage.setScene(new Scene(home));
-			
+
 			primaryStage.show();
-			
-		} catch(Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}
