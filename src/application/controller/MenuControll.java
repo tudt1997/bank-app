@@ -1,4 +1,4 @@
-package application.controllers;
+package application.controller;
 
 import java.io.IOException;
 import java.net.URL;
@@ -30,7 +30,7 @@ public class MenuControll implements Initializable {
 
 			stage.setScene(new Scene(root));
 
-			stage.setTitle("Registration");
+			stage.setTitle("Đăng ký vay");
 
 			stage.show();
 
@@ -52,7 +52,7 @@ public class MenuControll implements Initializable {
 
 			stage.setScene(new Scene(root));
 
-			stage.setTitle("Registration");
+			stage.setTitle("Tìm khoản vay");
 
 			stage.show();
 

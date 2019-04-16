@@ -16,10 +16,14 @@ import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit.ApplicationTest;
 
 import application.LoginUI;
+import application.controller.LoginController;
 import application.model.Message;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
@@ -28,11 +32,17 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 public class TestLoginUI extends ApplicationTest {
+	LoginController loginController;
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
-		AnchorPane home = (AnchorPane) FXMLLoader.load((LoginUI.class.getResource("view/Login.fxml")));
-
+		FXMLLoader fxmlLoader = new FXMLLoader(LoginUI.class.getResource("view/Login.fxml"));
+		
+		AnchorPane home = (AnchorPane) fxmlLoader.load();
+		
+		loginController = fxmlLoader.getController();
+		
 		primaryStage.setTitle("Đăng nhập");
 
 		primaryStage.setScene(new Scene(home));
@@ -81,27 +91,27 @@ public class TestLoginUI extends ApplicationTest {
 
 	@Test
 	public void testLoginSuccess() {
-		testUI("chinhvu", "123", Message.loginSuccessMsg, Message.helloMsg + "chinhvu");
+		testUI("chinhvu", "123", Message.LOGIN_SUCCESS, Message.HELLO + "chinhvu");
 	}
 
 	@Test
 	public void testLoginFail1() {
-		testUI("", "", Message.loginFailMsg, Message.emptyUsernamePasswordMsg);
+		testUI("", "", Message.LOGIN_FAIL, Message.EMPTY_USERNAME_PASSWORD);
 	}
 
 	@Test
 	public void testLoginFail2() {
-		testUI("chinhvu", "", Message.loginFailMsg, Message.emptyUsernamePasswordMsg);
+		testUI("chinhvu", "", Message.LOGIN_FAIL, Message.EMPTY_USERNAME_PASSWORD);
 	}
 
 	@Test
 	public void testLoginFail3() {
-		testUI("", "1234", Message.loginFailMsg, Message.emptyUsernamePasswordMsg);
+		testUI("", "1234", Message.LOGIN_FAIL, Message.EMPTY_USERNAME_PASSWORD);
 	}
 
 	@Test
 	public void testLoginFail4() {
-		testUI("chinhvu", "1234", Message.loginFailMsg, Message.wrongUsernamePasswordMsg);
+		testUI("chinhvu", "1234", Message.LOGIN_FAIL, Message.WRONG_USERNAME_PASSWORD);
 	}
 
 	private javafx.stage.Stage getTopModalStage() {

@@ -1,6 +1,5 @@
-package application.controllers;
+package application.controller;
 
-import java.awt.Window;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -8,12 +7,10 @@ import java.util.ResourceBundle;
 import application.LoginUI;
 import application.model.Message;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -22,12 +19,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.geometry.*;
-
 import java.sql.*;
 
 public class LoginController implements Initializable {
-
 	@FXML
 	private Button btnLogin;
 
@@ -37,7 +31,6 @@ public class LoginController implements Initializable {
 	@FXML
 	private PasswordField txtPassword;
 
-			
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
@@ -58,9 +51,9 @@ public class LoginController implements Initializable {
 	
 					alert.setTitle("");
 	
-					alert.setHeaderText(Message.loginSuccessMsg);
+					alert.setHeaderText(Message.LOGIN_SUCCESS);
 	
-					alert.setContentText(Message.helloMsg + username);
+					alert.setContentText(Message.HELLO + username);
 	
 					alert.showAndWait();
 	
@@ -89,9 +82,9 @@ public class LoginController implements Initializable {
 
 					alert.setTitle("");
 
-					alert.setHeaderText(Message.loginFailMsg);
+					alert.setHeaderText(Message.LOGIN_FAIL);
 
-					alert.setContentText(Message.wrongUsernamePasswordMsg);
+					alert.setContentText(Message.WRONG_USERNAME_PASSWORD);
 
 					alert.showAndWait();
 				}
@@ -101,9 +94,9 @@ public class LoginController implements Initializable {
 
 				alert.setTitle("");
 
-				alert.setHeaderText(Message.loginFailMsg);
+				alert.setHeaderText(Message.LOGIN_FAIL);
 
-				alert.setContentText(Message.emptyUsernamePasswordMsg);
+				alert.setContentText(Message.EMPTY_USERNAME_PASSWORD);
 
 				alert.showAndWait();
 			}

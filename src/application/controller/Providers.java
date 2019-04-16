@@ -1,4 +1,4 @@
-package application.controllers;
+package application.controller;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -311,6 +311,7 @@ public class Providers {
 		ps.setDouble(3, amountOfMoney);
 
 		ps.setDate(4, startDate);
+		
 		ps.setDate(5, endDate);
 
 		ps.setString(6, PayOriginalDebtSchedule);

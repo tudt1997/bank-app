@@ -1,4 +1,4 @@
-package application.controllers;
+package application.controller;
 
 import java.net.URL;
 import java.sql.ResultSet;
@@ -116,18 +116,32 @@ public class RegisterControll implements Initializable {
 
 	@FXML
 	public void executeNext() {
+		if (!tp1.isDisable()) {
+			if (checkTabFirst()) {
+//			if (true) {
+				btnPrev.setDisable(false);
+				tp1.setDisable(true);
+				tp2.setDisable(false);
+	//			tpParent.getSelectionModel().select(tp2);
+				
+				try {
+					fillTabSecond();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
-//		if (checkTabFirst()) {
-		if (true) {
-			tp1.setDisable(true);
-			tp2.setDisable(false);
-//			tpParent.getSelectionModel().select(tp2);
-			btnPrev.setDisable(false);
+				SingleSelectionModel<Tab> model = tpParent.getSelectionModel();
+				model.selectNext();
+	
+			}
+		} else if (!tp2.isDisable()) {
+			btnFinish.setDisable(false);
+			btnNext.setDisable(true);
+			tp2.setDisable(true);
+			tp3.setDisable(false);
 			
-//				fillTabSecond();
-
 			SingleSelectionModel<Tab> model = tpParent.getSelectionModel();
-
 			model.selectNext();
 		}
 
@@ -219,12 +233,12 @@ public class RegisterControll implements Initializable {
 		txtAddressOrganization.setText(rsCareer.getString(3));
 
 		txtPlaceOfWork.setText(rsCareer.getString(4));
+		System.out.println(rsCareer.getDouble(5));;
+		txtIncomePerMonth.setText(String.format("%.2f", rsCareer.getDouble(5)));
 
-		txtIncomePerMonth.setText(rsCareer.getString(5));
+		txtSpendPerMonth.setText(String.format("%.2f", rsCareer.getDouble(6)));
 
-		txtSpendPerMonth.setText(rsCareer.getString(6));
-
-		txtAsset.setText(rs.getString(11));
+		txtAsset.setText(String.format("%.2f", rs.getDouble(11)));
 
 	}
 
@@ -232,8 +246,18 @@ public class RegisterControll implements Initializable {
 	public void executePrev() {
 
 		SingleSelectionModel<Tab> model = tpParent.getSelectionModel();
-
 		model.selectPrevious();
+		
+		if (!tp2.isDisable()) {
+			btnPrev.setDisable(true);
+			tp1.setDisable(false);
+			tp2.setDisable(true);
+		} else if (!tp3.isDisable()) {
+			btnNext.setDisable(false);
+			btnFinish.setDisable(true);
+			tp2.setDisable(false);
+			tp3.setDisable(true);
+		}
 
 	}
 
@@ -242,7 +266,7 @@ public class RegisterControll implements Initializable {
 		// TODO Auto-generated method stub
 		cbGender.getItems().removeAll(cbGender.getItems());
 
-		cbGender.getItems().addAll("Male", "Female");
+		cbGender.getItems().addAll("Nam", "Nữ");
 
 		cbGender.getSelectionModel().select(0);
 
@@ -344,7 +368,7 @@ public class RegisterControll implements Initializable {
 
 				alert.setTitle("");
 
-				alert.setHeaderText("Information is not available/Incorrect!");
+				alert.setHeaderText("Information is not available/incorrect!");
 
 				alert.setContentText("Please enter again!");
 
@@ -419,4 +443,27 @@ public class RegisterControll implements Initializable {
 
 	}
 
+	public Tab getTp1() {
+		return tp1;
+	}
+
+	public Tab getTp2() {
+		return tp2;
+	}
+
+	public Tab getTp3() {
+		return tp3;
+	}
+
+	public Button getBtnPrev() {
+		return btnPrev;
+	}
+
+	public Button getBtnNext() {
+		return btnNext;
+	}
+
+	public Button getBtnFinish() {
+		return btnFinish;
+	}
 }

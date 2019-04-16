@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="397.0" prefWidth="330.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-fx:controller="application.controllers.MenuControll">
+fx:controller="application.controller.MenuControll">
    <children>
       <BorderPane prefHeight="397.0" prefWidth="332.0">
          <top>

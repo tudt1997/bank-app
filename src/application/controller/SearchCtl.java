@@ -1,4 +1,4 @@
-package application.controllers;
+package application.controller;
 
 import application.LoginUI;
 import application.model.SearchResult;
