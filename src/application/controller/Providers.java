@@ -6,12 +6,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 
 import application.LoginUI;
+import application.model.PersonalDetails;
 import application.model.SearchResult;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -75,7 +79,7 @@ public class Providers {
 			String address, String phoneNumber) throws SQLException {
 		connection = getConnection();
 
-		String query = "Select * from Person where Gender='" + gender + "'and IdentityCard='" + identityCard
+        String query = "Select * from person where Gender='" + gender + "'and IdentityCard='" + identityCard
 				+ "'and DateObBirth='" + birthOfDate + "'and PhoneNumber='" + phoneNumber + "'";
 
 //		connection = DriverManager.getConnection(url, user, pass);
@@ -150,36 +154,91 @@ public class Providers {
 		return true;
 	}
 
-	public static SearchResult searchLoanRecord(String searchType, String keyWord) throws SQLException {
+    public static ArrayList<SearchResult> searchLoanRecord(String searchType, String keyWord) throws SQLException {
+        ArrayList<SearchResult> returnList = new ArrayList<SearchResult>();
+
 		connection = getConnection();
-//		connection = DriverManager.getConnection(url, user, pass);
 		Statement stmt = connection.createStatement();
-//		String makhoanvay=null, sotienvay=null, sotaikhoan=null, chutaikhoan=null;
+        Statement stmt1 = connection.createStatement();
+        Statement stmt2 = connection.createStatement();
 
 		String query = "SELECT LoanId, PersonId, AmountOfMoney FROM recordloan WHERE " + searchType + " LIKE '%"
 				+ keyWord + "%'";
 		ResultSet rsRecordLoan = stmt.executeQuery(query);
 		// Ma khoan vay & so tien vay
-		if (!rsRecordLoan.next())
-			return null;
-		String makhoanvay = Integer.toString(rsRecordLoan.getInt(1));
-		String sotienvay = Float.toString(rsRecordLoan.getFloat(3));
+        String makhoanvay;
+        String sotienvay;
+        String sotaikhoan;
+        String chutaikhoan;
 
-		query = "SELECT AccountId, FullNameId FROM person WHERE Id=" + Integer.toString(rsRecordLoan.getInt(2));
-		ResultSet rsPerson = stmt.executeQuery(query);
-		// So tai khoan
-		if (!rsPerson.next())
-			return null;
-		String sotaikhoan = Integer.toString(rsPerson.getInt(1));
+        ResultSet rsFullname;
+        ResultSet rsPerson;
 
-		query = "SELECT FirstName, MidName, LastName FROM fullname WHERE Id=" + Integer.toString(rsPerson.getInt(2));
-		ResultSet rsFullname = stmt.executeQuery(query);
-		// Chu tai khoan
-		if (!rsFullname.next())
-			return null;
-		String chutaikhoan = rsFullname.getString(1) + " " + rsFullname.getString(2) + " " + rsFullname.getString(3);
+        while (rsRecordLoan.next()) {
+            System.out.println("abcc");
+            makhoanvay = Integer.toString(rsRecordLoan.getInt(1));
+            int personId = rsRecordLoan.getInt(2);
+            sotienvay = Float.toString(rsRecordLoan.getFloat(3));
 
-		return new SearchResult(makhoanvay, sotaikhoan, chutaikhoan, sotienvay);
+            query = "SELECT AccountId, FullNameId FROM person WHERE Id=" + personId;
+            rsPerson = stmt1.executeQuery(query);
+            // So tai khoan
+            if (!rsPerson.next())
+                return null;
+            sotaikhoan = Integer.toString(rsPerson.getInt(1));
+
+            query = "SELECT FirstName, MidName, LastName FROM fullname WHERE Id=" + Integer.toString(rsPerson.getInt(2));
+            rsFullname = stmt2.executeQuery(query);
+            // Chu tai khoan
+            if (!rsFullname.next())
+                return null;
+            chutaikhoan = rsFullname.getString(1) + " " + rsFullname.getString(2) + " " + rsFullname.getString(3);
+
+            returnList.add(new SearchResult(makhoanvay, sotaikhoan, chutaikhoan, sotienvay));
+        }
+        return returnList;
+    }
+
+    public static PersonalDetails getPersonalDetails(SearchResult sr) throws SQLException {
+        connection = getConnection();
+        Statement stmt = connection.createStatement();
+        PersonalDetails pd = new PersonalDetails();
+
+        //ho ten
+        pd.setHotenText(sr.getPersonname());
+
+        //tai khoan
+        String query = "SELECT Username FROM account WHERE Id = " + sr.getAccID();
+        ResultSet rs1 = stmt.executeQuery(query);
+        rs1.next();
+        pd.setTaikhoanText(rs1.getString(1));
+
+        //con lai
+        query = "SELECT AddressId, CareerId, Gender, IdentityCard, Passport, PhoneNumber, DateObBirth FROM person WHERE AccountId = " + sr.getAccID();
+        ResultSet rs2 = stmt.executeQuery(query);
+        rs2.next();
+        pd.setGioitinhText(rs2.getString(3));
+        pd.setCmndText(Integer.toString(rs2.getInt(4)));
+        pd.setHochieuText(Integer.toString(rs2.getInt(5)));
+        pd.setDienthoaiText(Integer.toString(rs2.getInt(6)));
+
+        DateFormat df = new SimpleDateFormat("dd/MM/yyy");
+        pd.setNgaysinhText(df.format(rs2.getDate(7)));
+
+        String AddressId = Integer.toString(rs2.getInt(1));
+        String CareerId = Integer.toString(rs2.getInt(2));
+
+        query = "SELECT NameOfAddress FROM address WHERE Id = " + AddressId;
+        ResultSet rs3 = stmt.executeQuery(query);
+        rs3.next();
+        pd.setDiachiText(rs3.getString(1));
+
+        query = "SELECT Organization FROM career WHERE Id = " + CareerId;
+        ResultSet rs4 = stmt.executeQuery(query);
+        rs4.next();
+        pd.setCoquanText(rs4.getString(1));
+
+        return pd;
 	}
 
 	public static ResultSet getResultSetPerson(String name, String gender, String identityCard, String birthOfDate,
@@ -300,7 +359,7 @@ public class Providers {
 		connection = getConnection();
 //		connection = DriverManager.getConnection(url, user, pass);
 
-		connection.setAutoCommit(false);
+        connection.setAutoCommit(true);
 
 		PreparedStatement ps = connection.prepareStatement(query);
 
@@ -327,5 +386,35 @@ public class Providers {
 
 		return count;
 	}
+
+    public static String getFullName(int id) throws SQLException {
+
+        String query = "Select * from Fullname where id=" + id + "";
+
+        Statement stmt = connection.createStatement();
+
+        ResultSet rs = stmt.executeQuery(query);
+
+        if (rs.next()) {
+            return rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4);
+        }
+
+        return null;
+
+    }
+
+    public static String getAddress(int id) throws SQLException {
+        String query = "Select * from Address where id=" + id + "";
+
+        Statement stmt = connection.createStatement();
+
+        ResultSet rs = stmt.executeQuery(query);
+
+        if (rs.next()) {
+            return rs.getString(2);
+        }
+
+        return null;
+    }
 
 }

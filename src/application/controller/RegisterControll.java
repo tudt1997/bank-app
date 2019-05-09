@@ -1,5 +1,6 @@
 package application.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,8 +11,12 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import application.LoginUI;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
@@ -23,6 +28,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
 
 public class RegisterControll implements Initializable {
 
@@ -43,6 +49,9 @@ public class RegisterControll implements Initializable {
 	
 	@FXML
 	private Button btnNext;
+
+    @FXML
+    private Button btnSearch;
 
 	@FXML
 	private Button btnFinish;
@@ -114,6 +123,15 @@ public class RegisterControll implements Initializable {
 	@FXML
 	private ChoiceBox<String> cbWithdrawalFundMethod;
 
+    @FXML
+    private TextField txtInterest;
+
+    @FXML
+    private Button btnbtnDisplayInterest;
+
+    @FXML
+    private Button btnPrintBill;
+
 	@FXML
 	public void executeNext() {
 		if (!tp1.isDisable()) {
@@ -135,15 +153,18 @@ public class RegisterControll implements Initializable {
 				model.selectNext();
 	
 			}
-		} else if (!tp2.isDisable()) {
-			btnFinish.setDisable(false);
-			btnNext.setDisable(true);
-			tp2.setDisable(true);
-			tp3.setDisable(false);
-			
-			SingleSelectionModel<Tab> model = tpParent.getSelectionModel();
-			model.selectNext();
-		}
+        } else if (!tp2.isDisable()) {
+            btnFinish.setDisable(false);
+            btnNext.setDisable(true);
+            tp2.setDisable(true);
+            tp3.setDisable(false);
+            btnPrintBill.setDisable(false);
+
+            SingleSelectionModel<Tab> model = tpParent.getSelectionModel();
+            model.selectNext();
+        } else {
+            btnPrintBill.setDisable(false);
+        }
 
 	}
 
@@ -174,11 +195,11 @@ public class RegisterControll implements Initializable {
 				} else {
 					Alert alert = new Alert(AlertType.WARNING);
 
-					alert.setTitle("Warning dialog!");
+                    alert.setTitle("Cảnh báo!");
 
-					alert.setHeaderText("Data not available in first tab!");
+                    alert.setHeaderText("Dữ liệu không tồn tại ở mẫu đầu tiên!");
 
-					alert.setContentText("Please enter again!");
+                    alert.setContentText("Xin mời nhập lại!");
 
 					alert.showAndWait();
 				}
@@ -190,11 +211,11 @@ public class RegisterControll implements Initializable {
 		} else {
 			Alert alert = new Alert(AlertType.WARNING);
 
-			alert.setTitle("Warning dialog!");
+            alert.setTitle("Cảnh báo!");
 
-			alert.setHeaderText("You need to fill out the first form!");
+            alert.setHeaderText("Bạn cần nhập đầy đủ thông tin vào mẫu đầu tiên!");
 
-			alert.setContentText("Please enter information in first tab!");
+            alert.setContentText("Xin nhập lại thông tin vào mẫu đầu tiêns!");
 
 			alert.showAndWait();
 
@@ -221,6 +242,18 @@ public class RegisterControll implements Initializable {
 		// ResultSet rs = Providers.getResultSetPerson(txtName.getText(), cbGender.getValue().toString(),
 		//		txtIdCard.getText(), dt, txtAddressPerson.getText(), txtPhoneNumber.getText());
 		ResultSet rs = Providers.getResultSetPersonById(txtIdCard.getText());
+
+//		String strFullName = Providers.getFullName(rs.getInt(4));
+//
+//		txtName.setTextDetails(strFullName);
+//
+//		cbGender.setValue(rs.getString(6));
+
+//		dtBirthday.setValue(LocalDate.parse(rs.getString(10)));
+//
+//		//txtAddressPerson.setTextDetails();
+//
+//		txtPhoneNumber.setTextDetails(rs.getString(9));
 		
 		int idCareer = (rs != null) ? rs.getInt(4) : 0;
 
@@ -252,11 +285,14 @@ public class RegisterControll implements Initializable {
 			btnPrev.setDisable(true);
 			tp1.setDisable(false);
 			tp2.setDisable(true);
+            btnFinish.setDisable(true);
+            btnPrintBill.setDisable(true);
 		} else if (!tp3.isDisable()) {
 			btnNext.setDisable(false);
 			btnFinish.setDisable(true);
 			tp2.setDisable(false);
 			tp3.setDisable(true);
+            btnPrintBill.setDisable(false);
 		}
 
 	}
@@ -300,148 +336,470 @@ public class RegisterControll implements Initializable {
 	}
 
 	@FXML
-	public void executeAdd() {
-		String TypeLoan = cbTypeLoan.getValue();
+    public void executeAdd() {
+        String TypeLoan = cbTypeLoan.getValue();
 
-		String TypePurposeLoan = cbTypePurposeLoan.getValue();
+        String TypePurposeLoan = cbTypePurposeLoan.getValue();
 
-		double MoneyLoan = 0;
+        double MoneyLoan = 0;
 
-		try {
+        try {
 
-			MoneyLoan = Double.valueOf(txtMoneyLoan.getText());
+            MoneyLoan = Double.valueOf(txtMoneyLoan.getText());
 
-			java.sql.Date StartDateLoan = null;
+            if (Double.valueOf(MoneyLoan) <= 0) {
 
-			if (dtStartDateLoan.getValue() != null) {
-				StartDateLoan = java.sql.Date.valueOf(dtStartDateLoan.getValue());
-			} else {
-				Alert alert = new Alert(AlertType.ERROR);
+                Alert alert = new Alert(AlertType.ERROR);
 
-				alert.setTitle("");
+                alert.setTitle("");
 
-				alert.setHeaderText("Wrong start date!");
+                alert.setHeaderText("Nhập không đúng định dạng tiền!");
 
-				alert.setContentText("Please enter again!");
+                alert.setContentText("Xin mời nhập lại!");
 
-				alert.showAndWait();
+                alert.showAndWait();
 
-				return;
+                return;
+            }
 
-			}
+            java.sql.Date StartDateLoan = null;
 
-			java.sql.Date EndDate = null;
+            if (dtStartDateLoan.getValue() != null) {
+                StartDateLoan = java.sql.Date.valueOf(dtStartDateLoan.getValue());
+            } else {
+                Alert alert = new Alert(AlertType.ERROR);
 
-			if (dtEndDate.getValue() != null) {
+                alert.setTitle("");
 
-				EndDate = java.sql.Date.valueOf(dtEndDate.getValue());
+                alert.setHeaderText("Sai ngày bắt đầu!");
 
-			} else {
-				Alert alert = new Alert(AlertType.ERROR);
+                alert.setContentText("Xin mời nhập lại!");
 
-				alert.setTitle("");
+                alert.showAndWait();
 
-				alert.setHeaderText("Wrong end date!");
+                return;
 
-				alert.setContentText("Please enter again!");
+            }
 
-				alert.showAndWait();
+            java.sql.Date EndDate = null;
 
-				return;
-			}
+            if (dtEndDate.getValue() != null) {
 
-			String PayOriginalDebt = cbPayOriginalDebt.getValue();
+                EndDate = java.sql.Date.valueOf(dtEndDate.getValue());
 
-			String InterestPay = cbInterestPay.getValue();
+            } else {
+                Alert alert = new Alert(AlertType.ERROR);
 
-			String PaymentMethod = cbPaymentMethod.getValue();
+                alert.setTitle("");
 
-			String WithdrawalFundMethod = cbWithdrawalFundMethod.getValue();
+                alert.setHeaderText("Sai ngày kết thúc!");
 
-			ResultSet rs = Providers.getRsLoan(TypeLoan, TypePurposeLoan, MoneyLoan, StartDateLoan.toString(),
-					EndDate.toString());
+                alert.setContentText("Xin mời nhập lại!");
 
-			ResultSet rsPerson;
+                alert.showAndWait();
 
-			if (rs == null) {
-				Alert alert = new Alert(AlertType.ERROR);
+                return;
+            }
 
-				alert.setTitle("");
+            if (!dtEndDate.getValue().isAfter(dtStartDateLoan.getValue())) {
 
-				alert.setHeaderText("Information is not available/incorrect!");
+                Alert alert = new Alert(AlertType.ERROR);
 
-				alert.setContentText("Please enter again!");
+                alert.setTitle("");
 
-				alert.showAndWait();
+                alert.setHeaderText("Sai khoảng ngày!");
 
-				return;
+                alert.setContentText("Xin mời nhập lại!");
 
-			} else {
+                alert.showAndWait();
 
-				String dt = "";
+                return;
 
-				SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
+            }
 
-				dt = ft.format(ft.parse(dtBirthday.getValue().toString()));
+            String PayOriginalDebt = cbPayOriginalDebt.getValue();
 
-				rsPerson = Providers.getResultSetPerson(txtName.getText(), cbGender.getValue().toString(),
-						txtIdCard.getText(), dt, txtAddressPerson.getText(), txtPhoneNumber.getText());
+            String InterestPay = cbInterestPay.getValue();
 
-				ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
-				ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
-				Alert alertYs = new Alert(AlertType.WARNING, "Do you really want to register?", yes, no);
+            String PaymentMethod = cbPaymentMethod.getValue();
 
-				alertYs.setTitle("Date format warning");
-				Optional<ButtonType> resultPt = alertYs.showAndWait();
+            String WithdrawalFundMethod = cbWithdrawalFundMethod.getValue();
 
-				int result = 0;
+            ResultSet rs = Providers.getRsLoan(TypeLoan, TypePurposeLoan, MoneyLoan, StartDateLoan.toString(),
+                    EndDate.toString());
 
-				if (resultPt.orElse(no) == yes) {
+            txtInterest.setText(rs.getFloat(6) * 100 + "%");
 
-					result = Providers.addRecordLoan(rs.getInt(1), rsPerson.getInt(1), MoneyLoan, StartDateLoan,
-							EndDate, PayOriginalDebt, InterestPay, PaymentMethod, WithdrawalFundMethod);
+            ResultSet rsPerson;
 
-				}
+            if (rs == null) {
+                Alert alert = new Alert(AlertType.ERROR);
 
-				System.out.println("Number of rows is effected " + result);
+                alert.setTitle("");
 
-				if (result != 0) {
-					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Register");
-					alert.setHeaderText("Results:");
-					alert.setContentText("Register successfully!");
+                alert.setHeaderText("Thông tin không chính xác hoặc không tồn tại!");
 
-					alert.showAndWait();
-				}
+                alert.setContentText("Xin mời nhập lại!");
 
-			}
+                alert.showAndWait();
 
-		} catch (SQLException e) {
-			// TODO: handle exception
+                return;
 
-			e.printStackTrace();
+            } else {
 
-			return;
-		} catch (NumberFormatException e) {
+                String dt = "";
 
-			Alert alert = new Alert(AlertType.ERROR);
+                SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
 
-			alert.setTitle("");
+                dt = ft.format(ft.parse(dtBirthday.getValue().toString()));
 
-			alert.setHeaderText("Wrong money!");
+                rsPerson = Providers.getResultSetPerson(txtName.getText(), cbGender.getValue().toString(),
+                        txtIdCard.getText(), dt, txtAddressPerson.getText(), txtPhoneNumber.getText());
 
-			alert.setContentText("Please enter again!");
+                ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
+                ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+                Alert alertYs = new Alert(AlertType.WARNING, "Bạn thực sự muốn đăng ký vay?", yes, no);
 
-			alert.showAndWait();
+                alertYs.setTitle("Cảnh báo định dạng ngày!");
+                Optional<ButtonType> resultPt = alertYs.showAndWait();
 
-			return;
+                int result = 0;
 
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+                if (resultPt.orElse(no) == yes) {
 
-	}
+                    result = Providers.addRecordLoan(rs.getInt(1), rsPerson.getInt(1), MoneyLoan, StartDateLoan,
+                            EndDate, PayOriginalDebt, InterestPay, PaymentMethod, WithdrawalFundMethod);
+
+                }
+
+                System.out.println("Number of rows is effected " + result);
+
+                if (result != 0) {
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Đăng ký");
+                    alert.setHeaderText("Kết quả:");
+                    alert.setContentText("Đăng ký thành công!");
+
+                    alert.showAndWait();
+                }
+
+            }
+
+        } catch (SQLException e) {
+            // TODO: handle exception
+
+            e.printStackTrace();
+
+            return;
+        } catch (NumberFormatException e) {
+
+            Alert alert = new Alert(AlertType.ERROR);
+
+            alert.setTitle("");
+
+            alert.setHeaderText("Số tiền sai!");
+
+            alert.setContentText("Xin mời nhập lại!");
+
+            alert.showAndWait();
+
+            return;
+
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }
+
+    @FXML
+    public void executeSearch() {
+
+        ResultSet rs = null;
+        String strAddress = null;
+        try {
+            rs = Providers.getResultSetPersonById(txtIdCard.getText());
+            if (rs != null) {
+                strAddress = Providers.getAddress(rs.getInt(3));
+
+                String strFullName = Providers.getFullName(rs.getInt(4));
+
+                txtName.setText(strFullName);
+
+                cbGender.setValue(rs.getString(6));
+
+                dtBirthday.setValue(LocalDate.parse(rs.getString(10)));
+
+                txtAddressPerson.setText(strAddress);
+
+                txtPhoneNumber.setText(rs.getString(9));
+            } else {
+                Alert alert = new Alert(AlertType.ERROR);
+
+                alert.setTitle("");
+
+                alert.setHeaderText("Không tồn tại số cmt nào như vậy!");
+
+                alert.setContentText("Xin mời nhập lại!");
+
+                alert.showAndWait();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @FXML
+    public void executeDisplayInterest() {
+
+        double MoneyLoan = 0;
+
+        MoneyLoan = Double.valueOf(txtMoneyLoan.getText());
+
+        if (Double.valueOf(MoneyLoan) <= 0) {
+
+            Alert alert = new Alert(AlertType.ERROR);
+
+            alert.setTitle("");
+
+            alert.setHeaderText("Nhập không đúng định dạng tiền!");
+
+            alert.setContentText("Xin mời nhập lại!");
+
+            alert.showAndWait();
+
+            return;
+        }
+
+        String TypeLoan = cbTypeLoan.getValue();
+
+        String TypePurposeLoan = cbTypePurposeLoan.getValue();
+
+        String PayOriginalDebt = cbPayOriginalDebt.getValue();
+
+        String InterestPay = cbInterestPay.getValue();
+
+        String PaymentMethod = cbPaymentMethod.getValue();
+
+        String WithdrawalFundMethod = cbWithdrawalFundMethod.getValue();
+
+        java.sql.Date StartDateLoan = null;
+
+        if (dtStartDateLoan.getValue() != null) {
+            StartDateLoan = java.sql.Date.valueOf(dtStartDateLoan.getValue());
+        } else {
+            Alert alert = new Alert(AlertType.ERROR);
+
+            alert.setTitle("");
+
+            alert.setHeaderText("Sai ngày bắt đầu!");
+
+            alert.setContentText("Xin mời nhập lại!");
+
+            alert.showAndWait();
+
+            return;
+
+        }
+
+        java.sql.Date EndDate = null;
+
+        if (dtEndDate.getValue() != null) {
+
+            EndDate = java.sql.Date.valueOf(dtEndDate.getValue());
+
+        } else {
+            Alert alert = new Alert(AlertType.ERROR);
+
+            alert.setTitle("");
+
+            alert.setHeaderText("Sai ngày kết thúc!");
+
+            alert.setContentText("Xin mời nhập lại!");
+
+            alert.showAndWait();
+
+            return;
+        }
+
+        if (!dtEndDate.getValue().isAfter(dtStartDateLoan.getValue())) {
+
+            Alert alert = new Alert(AlertType.ERROR);
+
+            alert.setTitle("");
+
+            alert.setHeaderText("Sai khoảng ngày!");
+
+            alert.setContentText("Xin mời nhập lại!");
+
+            alert.showAndWait();
+
+            return;
+
+        }
+
+        ResultSet rs = null;
+        try {
+            rs = Providers.getRsLoan(TypeLoan, TypePurposeLoan, MoneyLoan, StartDateLoan.toString(),
+                    EndDate.toString());
+
+            txtInterest.setText(rs.getFloat(6) * 100 + "%");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @FXML
+    public void executePrint() {
+
+        if (cbTypeLoan.getValue() == null ||
+                cbTypePurposeLoan.getValue() == null ||
+                txtMoneyLoan.getText() == null ||
+                dtStartDateLoan.getValue() == null ||
+                dtEndDate.getValue() == null ||
+                txtInterest.getText() == null ||
+                cbPayOriginalDebt.getValue() == null ||
+                cbInterestPay.getValue() == null ||
+                cbPaymentMethod.getValue() == null ||
+                cbWithdrawalFundMethod.getValue() == null) {
+            Alert alert = new Alert(AlertType.ERROR);
+
+            alert.setTitle("");
+
+            alert.setHeaderText("Nhập thiếu thông tin!");
+
+            alert.setContentText("Xin mời nhập thêm!");
+
+            alert.showAndWait();
+
+            return;
+        }
+
+        double MoneyLoan = 0;
+
+        MoneyLoan = Double.valueOf(txtMoneyLoan.getText());
+
+        if (Double.valueOf(MoneyLoan) <= 0) {
+
+            Alert alert = new Alert(AlertType.ERROR);
+
+            alert.setTitle("");
+
+            alert.setHeaderText("Nhập không đúng định dạng tiền!");
+
+            alert.setContentText("Xin mời nhập lại!");
+
+            alert.showAndWait();
+
+            return;
+        }
+
+        String TypeLoan = cbTypeLoan.getValue();
+
+        String TypePurposeLoan = cbTypePurposeLoan.getValue();
+
+        String PayOriginalDebt = cbPayOriginalDebt.getValue();
+
+        String InterestPay = cbInterestPay.getValue();
+
+        String PaymentMethod = cbPaymentMethod.getValue();
+
+        String WithdrawalFundMethod = cbWithdrawalFundMethod.getValue();
+
+        java.sql.Date StartDateLoan = null;
+
+        if (dtStartDateLoan.getValue() != null) {
+            StartDateLoan = java.sql.Date.valueOf(dtStartDateLoan.getValue());
+        } else {
+            Alert alert = new Alert(AlertType.ERROR);
+
+            alert.setTitle("");
+
+            alert.setHeaderText("Sai ngày bắt đầu!");
+
+            alert.setContentText("Xin mời nhập lại!");
+
+            alert.showAndWait();
+
+            return;
+
+        }
+
+        java.sql.Date EndDate = null;
+
+        if (dtEndDate.getValue() != null) {
+
+            EndDate = java.sql.Date.valueOf(dtEndDate.getValue());
+
+        } else {
+            Alert alert = new Alert(AlertType.ERROR);
+
+            alert.setTitle("");
+
+            alert.setHeaderText("Sai ngày kết thúc!");
+
+            alert.setContentText("Xin mời nhập lại!");
+
+            alert.showAndWait();
+
+            return;
+        }
+
+        Parent root;
+        try {
+            FXMLLoader loader = new FXMLLoader((LoginUI.class.getResource("view/PrintBill.fxml")));
+
+            root = (Parent) loader.load();
+
+            BillCtr billCtr = loader.getController();
+
+            if (txtInterest.getText().isEmpty()) {
+                Alert alert = new Alert(AlertType.ERROR);
+
+                alert.setTitle("");
+
+                alert.setHeaderText("Chưa hiển thị lại suất!");
+
+                alert.setContentText("Xin mời nhấn xem lãi suất tương ứng!");
+
+                alert.showAndWait();
+
+                return;
+            }
+
+            billCtr.setData("Họ tên:" + txtName.getText() + "\n" +
+                    "Hình thức vay: " + TypeLoan + "\n" +
+                    "Mục đích vay: " + TypePurposeLoan + "\n" +
+                    "Số tiền vay cấp hạn mức: " + PayOriginalDebt + "\n" +
+                    "Thời hạn vay:" + "\n" +
+                    "Ngày bắt đầu: " + StartDateLoan.toString() + "\n" +
+                    "Ngày kết thúc: " + EndDate.toString() + "\n" +
+                    "Lãi suất: " + txtInterest.getText() + "\n" +
+                    "Kế hoạch trả nợ:" + "\n" +
+                    "Kỳ trả nợ gốc: " + cbPayOriginalDebt.getValue() + "\n" +
+                    "Kỳ trả lãi: " + cbInterestPay.getValue() +
+                    "Phương thức trả nợ: " + cbPaymentMethod.getValue() + "\n" +
+                    "Phương thức rút vốn: " + cbWithdrawalFundMethod.getValue());
+
+            Stage stage = new Stage();
+
+            stage.setScene(new Scene(root));
+
+            stage.setTitle("In hóa đơn vay");
+
+            stage.show();
+
+            //((Node) (event.getSource())).getScene().getWindow().hide();
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }
 
 	public Tab getTp1() {
 		return tp1;

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.Button?>
@@ -16,7 +20,8 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane prefHeight="542.0" prefWidth="657.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.SearchCtl">
+<BorderPane prefHeight="542.0" prefWidth="657.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="application.controller.SearchCtl">
 	<!-- TODO Add Nodes -->
 	<center>
 	</center>
@@ -79,6 +84,7 @@
 						<Button fx:id="btnSearch" layoutX="290.0" layoutY="68.0" mnemonicParsing="false" onAction="#btnSearchClick" text="Tìm kiếm" />
 					</children>
 				</AnchorPane>
+
 				<TableView fx:id="tableSearchResult" prefHeight="287.0" prefWidth="656.0" GridPane.rowIndex="1">
 					<columns>
 						<TableColumn fx:id="column1Rs" prefWidth="170.0" text="Mã khoản vay" />
@@ -87,7 +93,13 @@
 						<TableColumn fx:id="column4Rs" prefWidth="144.0" text="Số tiền vay" />
 					</columns>
 				</TableView>
-				<Button mnemonicParsing="false" text="Xem chi tiết" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+                    <children>
+                        <Button fx:id="btnBack" layoutX="537.0" layoutY="20.0" mnemonicParsing="false"
+                                onAction="#executeBack" text="Quay lại"/>
+                        <!--                  <Button layoutX="413.0" layoutY="20.0" mnemonicParsing="false" text="Xem chi tiết" />-->
+                    </children>
+                </Pane>
 			</children>
 		</GridPane>
 	</center>

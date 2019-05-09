@@ -56,7 +56,7 @@ public class MenuControll implements Initializable {
 
 			stage.show();
 
-			((Node) (event.getSource())).getScene().getWindow().hide();
+            //((Node) (event.getSource())).getScene().getWindow().hide();
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -71,7 +71,7 @@ public class MenuControll implements Initializable {
 	}
 
 	public void initData(String strUser) {
-		txtUser.setText("Hello " + strUser + "!");
+        txtUser.setText("Xin chào " + strUser + "!");
 	}
 
 }

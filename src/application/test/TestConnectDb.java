@@ -273,7 +273,7 @@ class TestConnectDb {
 	@Test
 	void getResultSetPerson() {
 		try {
-			ResultSet rs = Providers.getResultSetPerson("Nguyễn Đức Anh", "Male", "123456",
+            ResultSet rs = Providers.getResultSetPerson("Nguyễn Đức Anh", "Nam", "123456",
 					new Date(119, 2, 11).toString(), "376 Thụy Khuê Hà Nội", "123456789");
 
 			int count = 0;
@@ -344,7 +344,7 @@ class TestConnectDb {
 
 		try {
 
-			assertEquals(true, Providers.checkPersonAvailable("Nguyễn Đức Anh", "Male", "123456",
+            assertEquals(true, Providers.checkPersonAvailable("Nguyễn Đức Anh", "Nam", "123456",
 					new Date(119, 2, 11).toString(), "42 Trần Phú Hà Đông Hà Nội", "123456789"));
 
 		} catch (SQLException e) {
