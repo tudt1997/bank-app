@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import application.Login;
 import application.model.Message;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -35,7 +36,7 @@ public class MenuController implements Initializable {
 
 			stage.show();
 
-			((Node) (event.getSource())).getScene().getWindow().hide();
+//			((Node) (event.getSource())).getScene().getWindow().hide();
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -65,6 +66,28 @@ public class MenuController implements Initializable {
 		}
 	}
 
+	@FXML
+	public void onClickLogout(Event event) {
+//		Login.main(new String[] {});
+		Parent root;
+		try {
+			root = (Parent) FXMLLoader.load((Login.class.getResource("view/Login.fxml")));
+
+			Stage stage = new Stage();
+
+			stage.setScene(new Scene(root));
+
+			stage.setTitle("");
+
+			stage.show();
+
+			((Node) (event.getSource())).getScene().getWindow().hide();
+
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub

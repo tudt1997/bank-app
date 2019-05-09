@@ -24,6 +24,8 @@ public class Login extends Application {
 
 			primaryStage.setScene(new Scene(home));
 
+			primaryStage.setResizable(false);
+
 			primaryStage.show();
 
 		} catch (Exception e) {

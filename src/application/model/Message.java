@@ -11,4 +11,5 @@ public class Message {
 	public static final String WRONG_BEGIN_DATE = "Sai ngày bắt đầu!";
 	public static final String WRONG_END_DATE = "Sai ngày kết thúc!";
 	public static final String INVALID_FORMAT_MONEY = "Nhập không đúng định dạng tiền!";
+	public static final String WARNING = "Cảnh báo!";
 }

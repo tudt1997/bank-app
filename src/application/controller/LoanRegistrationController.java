@@ -214,7 +214,7 @@ public class LoanRegistrationController implements Initializable {
                 } else {
                     Alert alert = new Alert(AlertType.WARNING);
 
-                    alert.setTitle("Cảnh báo!");
+                    alert.setTitle(Message.WARNING);
 
                     alert.setHeaderText("Dữ liệu không tồn tại ở mẫu đầu tiên!");
 
@@ -230,11 +230,11 @@ public class LoanRegistrationController implements Initializable {
         } else {
             Alert alert = new Alert(AlertType.WARNING);
 
-            alert.setTitle("Cảnh báo!");
+            alert.setTitle(Message.WARNING);
 
             alert.setHeaderText("Bạn cần nhập đầy đủ thông tin vào mẫu đầu tiên!");
 
-            alert.setContentText("Xin nhập lại thông tin vào mẫu đầu tiêns!");
+            alert.setContentText("Xin nhập lại thông tin vào mẫu đầu tiên!");
 
             alert.showAndWait();
 
@@ -357,6 +357,8 @@ public class LoanRegistrationController implements Initializable {
             @Override
             public void run() {
                 txtIdCard.requestFocus();
+                txtName.setFocusTraversable(false);
+                dtBirthday.setFocusTraversable(false);
             }
         });
     }
@@ -602,7 +604,7 @@ public class LoanRegistrationController implements Initializable {
 
     }
 
-    boolean isWrongMoney() {
+    private boolean isWrongMoney() {
         if (txtMoneyLoan.getText().equals("") || Double.valueOf(txtMoneyLoan.getText()) <= 0) {
 
             Alert alert = new Alert(AlertType.ERROR);
@@ -639,7 +641,9 @@ public class LoanRegistrationController implements Initializable {
         startDateLoan = null;
 
         if (dtStartDateLoan.getValue() != null) {
+
             startDateLoan = java.sql.Date.valueOf(dtStartDateLoan.getValue());
+
         } else {
             Alert alert = new Alert(AlertType.ERROR);
 
@@ -654,8 +658,6 @@ public class LoanRegistrationController implements Initializable {
             return true;
 
         }
-
-        endDate = null;
 
         if (dtEndDate.getValue() != null) {
 
