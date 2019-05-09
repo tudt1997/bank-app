@@ -151,7 +151,7 @@ public class Providers {
 		connection = getConnection();
 
         if (searchType.equals("IdentityCard")) {
-            String pquery = "SELECT Id FROM person WHERE " + searchType + " LIKE '%" + keyWord + "%'";
+			String pquery = "SELECT Id FROM person WHERE " + searchType + " = " + keyWord;
             Statement pstmt = connection.createStatement();
             ResultSet pRsPerson = pstmt.executeQuery(pquery);
             if (!pRsPerson.next()) return null;
@@ -164,8 +164,8 @@ public class Providers {
         Statement stmt1 = connection.createStatement();
         Statement stmt2 = connection.createStatement();
 
-		String query = "SELECT LoanId, PersonId, AmountOfMoney FROM recordloan WHERE " + searchType + " LIKE '%"
-				+ keyWord + "%'";
+		String query = "SELECT LoanId, PersonId, AmountOfMoney FROM recordloan WHERE " + searchType + " = "
+				+ keyWord;
         System.out.println(query);
 		ResultSet rsRecordLoan = stmt.executeQuery(query);
 		// Ma khoan vay & so tien vay
