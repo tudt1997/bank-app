@@ -68,7 +68,6 @@ public class MenuController implements Initializable {
 
 	@FXML
 	public void onClickLogout(Event event) {
-//		Login.main(new String[] {});
 		Parent root;
 		try {
 			root = (Parent) FXMLLoader.load((Login.class.getResource("view/Login.fxml")));
@@ -88,6 +87,30 @@ public class MenuController implements Initializable {
 			e.printStackTrace();
 		}
 	}
+
+	public void onClickPayment(ActionEvent event){
+
+		Parent root;
+		try {
+			root = (Parent) FXMLLoader.load((Login.class.getResource("view/SearchForPayment.fxml")));
+
+			Stage stage = new Stage();
+
+			stage.setScene(new Scene(root));
+
+			stage.setTitle("Trả tiền vay");
+
+			stage.show();
+
+//			((Node) (event.getSource())).getScene().getWindow().hide();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub

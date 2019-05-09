@@ -20,7 +20,11 @@ public class LoanRegistration extends Application {
 
 			primaryStage.setTitle("Đăng ký vay");
 
-			primaryStage.setScene(new Scene(home));
+			Scene scene = new Scene(home);
+
+			scene.getStylesheets().add(getClass().getResource("view/application.css").toExternalForm());
+
+			primaryStage.setScene(scene);
 
 			primaryStage.setResizable(false);
 

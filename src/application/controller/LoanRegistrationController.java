@@ -128,7 +128,7 @@ public class LoanRegistrationController implements Initializable {
     private TextField txtInterest;
 
     @FXML
-    private Button btnbtnDisplayInterest;
+    private Button btnDisplayInterest;
 
     @FXML
     private Button btnPrintBill;
@@ -353,12 +353,13 @@ public class LoanRegistrationController implements Initializable {
 
         cbPaymentMethod.getItems().addAll("Tự động trừ tài khoản", "Nộp tiền mặt hoặc chuyển khoản");
 
+        cbGender.setOpacity(1);
+        cbGender.setOpacity(1);
+
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 txtIdCard.requestFocus();
-                txtName.setFocusTraversable(false);
-                dtBirthday.setFocusTraversable(false);
             }
         });
     }

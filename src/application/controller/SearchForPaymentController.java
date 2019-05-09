@@ -19,50 +19,51 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class SearchController implements Initializable {
-    public SearchController() {
+public class SearchForPaymentController implements Initializable {
+    public SearchForPaymentController() {
 
     }
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
         tableSearchResult.setPlaceholder(new Label(""));
-	}
+    }
 
-	@FXML
-	private Button btnSearch;
+    @FXML
+    private Button btnSearch;
 
-	@FXML
-	private ChoiceBox cbType;
+    @FXML
+    private ChoiceBox cbType;
 
-	@FXML
-	private TextField searchKeyWord;
+    @FXML
+    private TextField searchKeyWord;
 
-	@FXML
-	private TableView tableSearchResult;
+    @FXML
+    private TableView tableSearchResult;
 
-	@FXML
-    private TableColumn column1Rs, column2Rs, column3Rs, column4Rs;
+    @FXML
+    private TableColumn column1Rs, column2Rs, column3Rs, column4Rs,column5Rs;
 
-	@FXML
-	public void btnSearchClick(ActionEvent event) {
-		try {
+    @FXML
+    public void btnSearchClick(ActionEvent event) {
+        try {
             String searchType = "";
             if (cbType.getSelectionModel().getSelectedItem().toString().equals("Mã khoản vay"))
                 searchType = "LoanId";
             else if (cbType.getSelectionModel().getSelectedItem().toString().equals("Số CMND"))
                 searchType = "IdentityCard";
 
-			String keyWord = searchKeyWord.getText();
+            String keyWord = searchKeyWord.getText();
 
-            ArrayList<SearchResult> searchResultList = Providers.searchLoanRecord(searchType, keyWord);
+            ArrayList<SearchResult> searchResultList = Providers.searchLoanRecordForPayment(searchType, keyWord);
 
-			tableSearchResult.getItems().clear();
+            tableSearchResult.getItems().clear();
 
             column1Rs.setCellValueFactory(new PropertyValueFactory<>("loanID"));
             column2Rs.setCellValueFactory(new PropertyValueFactory<>("accID"));
             column3Rs.setCellValueFactory(new PropertyValueFactory<>("personname"));
             column4Rs.setCellValueFactory(new PropertyValueFactory<>("amount"));
+            column5Rs.setCellValueFactory(new PropertyValueFactory<>("paymentMethod"));
 
             tableSearchResult.scrollToColumnIndex(0);
 
@@ -79,16 +80,16 @@ public class SearchController implements Initializable {
                 }
             });
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (NullPointerException e1) {
-		    alertNoLoanFound();
-		}
-	}
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e1) {
+            alertNoLoanFound();
+        }
+    }
 
     public void viewDetails(SearchResult sr) {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Login.class.getResource("view/PersonalDetails.fxml"));
+        loader.setLocation(Login.class.getResource("view/DetailPayment.fxml"));
         try {
             loader.load();
         } catch (IOException e) {
@@ -100,8 +101,8 @@ public class SearchController implements Initializable {
         stage.setScene(new Scene(p));
         stage.show();
 
-        PersonalDetailsController pd = loader.getController();
-        pd.setTextDetails(sr);
+        PaymentController pd = loader.getController();
+        pd.setAllField(sr.getId(),sr.getPaymentMethod(),sr.getAmount());
     }
 
     public void alertNoLoanFound() {
