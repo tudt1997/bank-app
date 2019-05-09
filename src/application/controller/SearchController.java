@@ -46,7 +46,12 @@ public class SearchController implements Initializable {
 	@FXML
 	public void btnSearchClick(ActionEvent event) {
 		try {
-			String searchType = cbType.getSelectionModel().getSelectedItem().toString();
+            String searchType = "";
+            if (cbType.getSelectionModel().getSelectedItem().toString().equals("Mã khoản vay"))
+                searchType = "LoanId";
+            else if (cbType.getSelectionModel().getSelectedItem().toString().equals("Số CMND"))
+                searchType = "IdentityCard";
+
 			String keyWord = searchKeyWord.getText();
 
             ArrayList<SearchResult> searchResultList = Providers.searchLoanRecord(searchType, keyWord);

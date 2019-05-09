@@ -72,10 +72,8 @@
 								<ChoiceBox fx:id="cbType" prefHeight="30.0" prefWidth="150.0">
 									<items>
 										<FXCollections fx:factory="observableArrayList">
-											<String fx:value="Mã tài khoản" />
 											<String fx:value="Mã khoản vay" />
-											<String fx:value="CMT" />
-											<String fx:value="Số tiền" />
+                                            <String fx:value="Số CMND"/>
 										</FXCollections>
 									</items>
 								</ChoiceBox>

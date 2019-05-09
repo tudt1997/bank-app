@@ -149,12 +149,24 @@ public class Providers {
         ArrayList<SearchResult> returnList = new ArrayList<SearchResult>();
 
 		connection = getConnection();
+
+        if (searchType.equals("IdentityCard")) {
+            String pquery = "SELECT Id FROM person WHERE " + searchType + " LIKE '%" + keyWord + "%'";
+            Statement pstmt = connection.createStatement();
+            ResultSet pRsPerson = pstmt.executeQuery(pquery);
+            if (!pRsPerson.next()) return null;
+
+            searchType = "PersonId";
+            keyWord = pRsPerson.getString(1);
+        }
+
 		Statement stmt = connection.createStatement();
         Statement stmt1 = connection.createStatement();
         Statement stmt2 = connection.createStatement();
 
 		String query = "SELECT LoanId, PersonId, AmountOfMoney FROM recordloan WHERE " + searchType + " LIKE '%"
 				+ keyWord + "%'";
+        System.out.println(query);
 		ResultSet rsRecordLoan = stmt.executeQuery(query);
 		// Ma khoan vay & so tien vay
         String makhoanvay;

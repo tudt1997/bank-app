@@ -21,15 +21,6 @@ public class PersonalDetailsController implements Initializable{
     }
 
     public void setTextDetails(SearchResult sr){
-//        hotenText.setEditable(false);
-//        taikhoanText.setEditable(false);
-//        diachiText.setEditable(false);
-//        coquanText.setEditable(false);
-//        gioitinhText.setEditable(false);
-//        hochieuText.setEditable(false);
-//        cmndText.setEditable(false);
-//        ngaysinhText.setEditable(false);
-//        dienthoaiText.setEditable(false);
 
         try {
             PersonalDetails pd = Providers.getPersonalDetails(sr);
