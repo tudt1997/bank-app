@@ -381,7 +381,19 @@ public class LoanRegistrationController implements Initializable {
             ResultSet rs = Providers.getRsLoan(typeLoan, typePurposeLoan, moneyLoan, startDateLoan.toString(),
                     endDate.toString());
 
-            txtInterest.setText(rs.getFloat(6) * 100 + "%");
+            try {
+                txtInterest.setText(rs.getFloat(6) * 100 + "%");
+            } catch (NullPointerException e) {
+                Alert alert = new Alert(AlertType.ERROR);
+
+                alert.setTitle("");
+
+                alert.setContentText("Vui lòng nhập đầy đủ thông tin");
+
+                alert.showAndWait();
+
+                return;
+            }
 
             ResultSet rsPerson;
 
@@ -427,7 +439,19 @@ public class LoanRegistrationController implements Initializable {
 
                 System.out.println("Number of rows is effected " + result);
 
-                if (result != 0) {
+                if (result == -1) {
+                    Alert alert = new Alert(AlertType.ERROR);
+
+                    alert.setTitle("");
+
+                    alert.setHeaderText("Thiếu thông tin");
+
+                    alert.setContentText("Vui lòng điền đầy đủ");
+
+                    alert.showAndWait();
+
+                    return;
+                } else if (result != 0) {
                     Alert alert = new Alert(AlertType.INFORMATION);
                     alert.setTitle("Đăng ký");
                     alert.setHeaderText("Kết quả:");
@@ -518,6 +542,16 @@ public class LoanRegistrationController implements Initializable {
             txtInterest.setText(rs.getFloat(6) * 100 + "%");
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (NullPointerException e1) {
+            Alert alert = new Alert(AlertType.ERROR);
+
+            alert.setTitle("");
+
+            alert.setHeaderText("Nhập thiếu thông tin!");
+
+            alert.setContentText("Chưa thể tính lãi suất");
+
+            alert.showAndWait();
         }
 
     }
@@ -605,8 +639,11 @@ public class LoanRegistrationController implements Initializable {
     }
 
     private boolean isWrongMoney() {
-        if (txtMoneyLoan.getText().equals("") || Double.valueOf(txtMoneyLoan.getText()) <= 0) {
-
+        try {
+            if (txtMoneyLoan.getText().equals("") || Double.valueOf(txtMoneyLoan.getText()) <= 0) {
+                throw new NumberFormatException();
+            }
+        } catch (NumberFormatException e) {
             Alert alert = new Alert(AlertType.ERROR);
 
             alert.setTitle("");

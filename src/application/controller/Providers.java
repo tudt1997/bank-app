@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import application.model.PersonalDetails;
 import application.model.SearchResult;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 public class Providers {
 
@@ -385,8 +386,11 @@ public class Providers {
 		ps.setString(9, WithdrawalFundMethod);
 
 		int count = 0;
-		count = ps.executeUpdate();
-
+		try {
+			count = ps.executeUpdate();
+		} catch (MySQLIntegrityConstraintViolationException e) {
+			return -1;
+		}
 		return count;
 	}
 
