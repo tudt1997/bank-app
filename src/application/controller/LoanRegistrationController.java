@@ -647,16 +647,16 @@ public class LoanRegistrationController implements Initializable {
         } catch (NumberFormatException e) {
             Alert alert = new Alert(AlertType.ERROR);
 
-                alert.setTitle("");
+            alert.setTitle("");
 
-                alert.setHeaderText(Message.INVALID_FORMAT_MONEY);
+            alert.setHeaderText(Message.INVALID_FORMAT_MONEY);
 
-                alert.setContentText(Message.ENTER_AGAIN);
+            alert.setContentText(Message.ENTER_AGAIN);
 
-                alert.showAndWait();
+            alert.showAndWait();
 
-                return true;
-            }
+            return true;
+
         }
 
         moneyLoan = Double.valueOf(txtMoneyLoan.getText());
