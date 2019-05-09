@@ -491,9 +491,9 @@ public class LoanRegistrationController implements Initializable {
 
                 alert.setTitle("");
 
-                alert.setHeaderText("Không tồn tại số cmt nào như vậy!");
+                alert.setHeaderText(Message.INVALID_PERSON_ID);
 
-                alert.setContentText("Xin mời nhập lại!");
+                alert.setContentText(Message.ENTER_AGAIN);
 
                 alert.showAndWait();
             }
@@ -605,19 +605,24 @@ public class LoanRegistrationController implements Initializable {
     }
 
     private boolean isWrongMoney() {
-        if (txtMoneyLoan.getText().equals("") || Double.valueOf(txtMoneyLoan.getText()) <= 0) {
+        try {
+            if (txtMoneyLoan.getText().equals("") || Double.valueOf(txtMoneyLoan.getText()) <= 0) {
 
-            Alert alert = new Alert(AlertType.ERROR);
+                Alert alert = new Alert(AlertType.ERROR);
 
-            alert.setTitle("");
+                alert.setTitle("");
 
-            alert.setHeaderText(Message.INVALID_FORMAT_MONEY);
+                alert.setHeaderText(Message.INVALID_FORMAT_MONEY);
 
-            alert.setContentText(Message.ENTER_AGAIN);
+                alert.setContentText(Message.ENTER_AGAIN);
 
-            alert.showAndWait();
+                alert.showAndWait();
 
-            return true;
+                return true;
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return false;
         }
 
         moneyLoan = Double.valueOf(txtMoneyLoan.getText());

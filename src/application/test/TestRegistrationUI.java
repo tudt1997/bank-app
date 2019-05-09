@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import application.model.Message;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Test;
 import org.testfx.api.FxAssert;
 import org.testfx.api.FxToolkit;
@@ -22,6 +24,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.testfx.matcher.control.LabeledMatchers;
+import org.testfx.matcher.control.TextFlowMatchers;
+import org.testfx.matcher.control.TextInputControlMatchers;
+import org.testfx.matcher.control.TextMatchers;
 
 public class TestRegistrationUI extends ApplicationTest {
 	private LoanRegistrationController loanRegistrationController;
@@ -52,37 +57,36 @@ public class TestRegistrationUI extends ApplicationTest {
 	private void doSearch(String idCard) {
 
 		if (!idCard.equals("")) {
-			clickOn("txtIdCard");
+			clickOn("#txtIdCard");
 			write(idCard);
 		}
 
 		clickOn("#btnSearch");
 	}
 
+	private void checkDialogFail() {
+		Stage actualAlertDialog = getTopModalStage();
+		DialogPane dialogPane = (DialogPane) actualAlertDialog.getScene().getRoot();
+
+		Assert.assertEquals(Message.INVALID_PERSON_ID, dialogPane.getHeaderText());
+		Assert.assertEquals(Message.ENTER_AGAIN, dialogPane.getContentText());
+	}
 	@Test
 	public void testTab1Success() {
 		doSearch("123456");
-		FxAssert.verifyThat("#txtName", LabeledMatchers.hasText("Nguyễn Đức Anh"));
-		FxAssert.verifyThat("#txtName", LabeledMatchers.hasText("Nguyễn Đức Anh"));
-		FxAssert.verifyThat("#txtName", LabeledMatchers.hasText("Nguyễn Đức Anh"));
-		FxAssert.verifyThat("#txtName", LabeledMatchers.hasText("Nguyễn Đức Anh"));
-
+		FxAssert.verifyThat("#txtName", TextInputControlMatchers.hasText("Nguyễn Đức Anh"));
 	}
 
 	@Test
 	public void testTab1Fail1() {
 		doSearch("");
-
-		Stage actualAlertDialog = getTopModalStage();
-		DialogPane dialogPane = (DialogPane) actualAlertDialog.getScene().getRoot();
+		checkDialogFail();
 	}
 
 	@Test
 	public void testTab1Fail2() {
 		doSearch("a");
-
-		Stage actualAlertDialog = getTopModalStage();
-		DialogPane dialogPane = (DialogPane) actualAlertDialog.getScene().getRoot();
+		checkDialogFail();
 	}
 
 	private javafx.stage.Stage getTopModalStage() {
