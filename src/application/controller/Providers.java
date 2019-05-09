@@ -21,7 +21,7 @@ public class Providers {
 
 	public static Connection connection;
 
-	private static String url = "jdbc:mysql://localhost:3306/dbcl"
+	private static String url = "jdbc:mysql://localhost:3306/test"
 			+ "?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true?useUnicode=true&"
 			+ "characterEncoding=UTF-8&autoReconnect=true";
 
@@ -202,6 +202,71 @@ public class Providers {
         }
         return returnList;
     }
+
+	public static ArrayList<SearchResult> searchLoanRecordForPayment(String searchType, String keyWord) throws SQLException {
+		ArrayList<SearchResult> returnList = new ArrayList<SearchResult>();
+
+		connection = getConnection();
+
+		if (searchType.equals("IdentityCard")) {
+			String pquery = "SELECT Id FROM person WHERE " + searchType + " LIKE '%" + keyWord + "%'";
+			Statement pstmt = connection.createStatement();
+			ResultSet pRsPerson = pstmt.executeQuery(pquery);
+			if (!pRsPerson.next()) return null;
+
+			searchType = "PersonId";
+			keyWord = pRsPerson.getString(1);
+		}
+
+		Statement stmt = connection.createStatement();
+		Statement stmt1 = connection.createStatement();
+		Statement stmt2 = connection.createStatement();
+
+		String query = "SELECT LoanId, PersonId, AmountOfMoney,PaymentMethod,Id FROM recordloan WHERE " + searchType + " LIKE '%"
+				+ keyWord + "%'";
+		System.out.println(query);
+		ResultSet rsRecordLoan = stmt.executeQuery(query);
+		// Ma khoan vay & so tien vay
+		String makhoanvay;
+		String sotienvay;
+		String sotaikhoan;
+		String chutaikhoan;
+
+		ResultSet rsFullname;
+		ResultSet rsPerson;
+
+		while (rsRecordLoan.next()) {
+			System.out.println("abcc");
+			makhoanvay = Integer.toString(rsRecordLoan.getInt(1));
+			int personId = rsRecordLoan.getInt(2);
+			sotienvay = Float.toString(rsRecordLoan.getFloat(3));
+
+			query = "SELECT AccountId, FullNameId FROM person WHERE Id=" + personId;
+			rsPerson = stmt1.executeQuery(query);
+			// So tai khoan
+			if (!rsPerson.next())
+				return null;
+			sotaikhoan = Integer.toString(rsPerson.getInt(1));
+
+			query = "SELECT FirstName, MidName, LastName FROM fullname WHERE Id=" + Integer.toString(rsPerson.getInt(2));
+			rsFullname = stmt2.executeQuery(query);
+			// Chu tai khoan
+			if (!rsFullname.next())
+				return null;
+			chutaikhoan = rsFullname.getString(1) + " " + rsFullname.getString(2) + " " + rsFullname.getString(3);
+
+			String paymentMethod=rsRecordLoan.getString("PaymentMethod");
+
+			System.out.println("method"+paymentMethod);
+
+			int id=rsRecordLoan.getInt("Id");
+
+			System.out.println("id: "+id);
+
+			returnList.add(new SearchResult(id,makhoanvay, sotaikhoan, chutaikhoan, sotienvay, paymentMethod));
+		}
+		return returnList;
+	}
 
     public static PersonalDetails getPersonalDetails(SearchResult sr) throws SQLException {
         connection = getConnection();
@@ -423,5 +488,40 @@ public class Providers {
 
         return null;
     }
+
+	public static int updateRecordLoan(int id, float monney) throws SQLException {
+
+		String query = "UPDATE recordloan "
+				+ "SET AmountOfMoney=? where id=?";
+
+		connection = getConnection();
+//		connection = DriverManager.getConnection(url, user, pass);
+
+		connection.setAutoCommit(true);
+
+		PreparedStatement ps = connection.prepareStatement(query);
+
+		ps.setFloat(1,monney);
+		ps.setInt(2,id);
+
+		int count = 0;
+		count = ps.executeUpdate();
+
+		return count;
+	}
+
+	public ResultSet getRecordLoanById(int id) throws SQLException {
+		String query = "Select * from recordloan where id=" + id + "";
+
+		Statement stmt = connection.createStatement();
+
+		ResultSet rs = stmt.executeQuery(query);
+
+		if (rs.next()) {
+			return rs;
+		}
+
+		return null;
+	}
 
 }
