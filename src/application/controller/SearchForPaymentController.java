@@ -26,6 +26,7 @@ public class SearchForPaymentController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        tableSearchResult.setPlaceholder(new Label(""));
     }
 
     @FXML
@@ -100,7 +101,7 @@ public class SearchForPaymentController implements Initializable {
         stage.setScene(new Scene(p));
         stage.show();
 
-        PaymentCtr pd = loader.getController();
+        PaymentController pd = loader.getController();
         pd.setAllField(sr.getId(),sr.getPaymentMethod(),sr.getAmount());
     }
 

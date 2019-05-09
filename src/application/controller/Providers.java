@@ -15,13 +15,13 @@ import java.util.ArrayList;
 
 import application.model.PersonalDetails;
 import application.model.SearchResult;
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+//import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 public class Providers {
 
 	public static Connection connection;
 
-	private static String url = "jdbc:mysql://localhost:3306/test"
+	private static String url = "jdbc:mysql://localhost:3306/dbcl"
 			+ "?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true?useUnicode=true&"
 			+ "characterEncoding=UTF-8&autoReconnect=true";
 
@@ -451,11 +451,11 @@ public class Providers {
 		ps.setString(9, WithdrawalFundMethod);
 
 		int count = 0;
-		try {
+//		try {
 			count = ps.executeUpdate();
-		} catch (MySQLIntegrityConstraintViolationException e) {
-			return -1;
-		}
+//		} catch (MySQLIntegrityConstraintViolationException e) {
+//			return -1;
+//		}
 		return count;
 	}
 

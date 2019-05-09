@@ -12,7 +12,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class PaymentCtr implements Initializable {
+public class PaymentController implements Initializable {
 
     private int id;
 

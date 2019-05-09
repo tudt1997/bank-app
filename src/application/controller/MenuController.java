@@ -68,7 +68,6 @@ public class MenuController implements Initializable {
 
 	@FXML
 	public void onClickLogout(Event event) {
-//		Login.main(new String[] {});
 		Parent root;
 		try {
 			root = (Parent) FXMLLoader.load((Login.class.getResource("view/Login.fxml")));
@@ -99,7 +98,7 @@ public class MenuController implements Initializable {
 
 			stage.setScene(new Scene(root));
 
-			stage.setTitle("Đăng ký vay");
+			stage.setTitle("Trả tiền vay");
 
 			stage.show();
 

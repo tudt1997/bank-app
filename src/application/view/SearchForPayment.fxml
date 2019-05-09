@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.collections.*?>
 <?import javafx.scene.control.*?>
@@ -75,6 +76,12 @@
 											<String fx:value="Số CMND" />
 										</FXCollections>
 									</items>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <GridPane.margin>
+                              <Insets right="12.0" />
+                           </GridPane.margin>
 								</ChoiceBox>
 							</children>
 						</GridPane>
