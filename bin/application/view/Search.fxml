@@ -68,14 +68,12 @@
 								<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 							</rowConstraints>
 							<children>
-								<TextField fx:id="searchKeyWord" prefHeight="30.0" prefWidth="235.0" GridPane.columnIndex="1" />
+								<TextField fx:id="searchKeyWord" prefHeight="30.0" prefWidth="235.0" GridPane.columnIndex="1" onAction="#btnSearchClick" />
 								<ChoiceBox fx:id="cbType" prefHeight="30.0" prefWidth="150.0">
 									<items>
 										<FXCollections fx:factory="observableArrayList">
-											<String fx:value="Mã tài khoản" />
 											<String fx:value="Mã khoản vay" />
-											<String fx:value="CMT" />
-											<String fx:value="Số tiền" />
+                                            <String fx:value="Số CMND"/>
 										</FXCollections>
 									</items>
 								</ChoiceBox>

@@ -151,7 +151,7 @@ public class Providers {
 		connection = getConnection();
 
         if (searchType.equals("IdentityCard")) {
-            String pquery = "SELECT Id FROM person WHERE " + searchType + " LIKE '%" + keyWord + "%'";
+			String pquery = "SELECT Id FROM person WHERE " + searchType + " = " + keyWord;
             Statement pstmt = connection.createStatement();
             ResultSet pRsPerson = pstmt.executeQuery(pquery);
             if (!pRsPerson.next()) return null;
