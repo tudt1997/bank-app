@@ -4,7 +4,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.PersonalDetailsCtl">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.PersonalDetailsController">
 
    <Label id="hotenLabel" layoutX="107.0" layoutY="38.0" text="Họ tên: " />
    <Label id="taikhoanLabel" layoutX="107.0" layoutY="73.0" text="Tài khoản: " />

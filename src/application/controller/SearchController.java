@@ -1,6 +1,6 @@
 package application.controller;
 
-import application.LoginUI;
+import application.Login;
 import application.model.SearchResult;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,8 +19,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class SearchCtl implements Initializable {
-    public SearchCtl() {
+public class SearchController implements Initializable {
+    public SearchController() {
 
     }
 
@@ -53,13 +53,18 @@ public class SearchCtl implements Initializable {
 
 			tableSearchResult.getItems().clear();
 
-			column1Rs.setCellValueFactory(new PropertyValueFactory<>("loanID"));
-			column2Rs.setCellValueFactory(new PropertyValueFactory<>("accID"));
-			column3Rs.setCellValueFactory(new PropertyValueFactory<>("personname"));
-			column4Rs.setCellValueFactory(new PropertyValueFactory<>("amount"));
+            column1Rs.setCellValueFactory(new PropertyValueFactory<>("loanID"));
+            column2Rs.setCellValueFactory(new PropertyValueFactory<>("accID"));
+            column3Rs.setCellValueFactory(new PropertyValueFactory<>("personname"));
+            column4Rs.setCellValueFactory(new PropertyValueFactory<>("amount"));
 
-            for (SearchResult searchrs : searchResultList)
-                tableSearchResult.getItems().add(searchrs);
+            tableSearchResult.scrollToColumnIndex(0);
+
+            if (searchResultList.size() == 0)
+                alertNoLoanFound();
+            else
+                for (SearchResult searchrs : searchResultList)
+                    tableSearchResult.getItems().add(searchrs);
 
             tableSearchResult.setOnMouseClicked(event2 -> {
                 if (event2.getClickCount() == 2) {
@@ -71,20 +76,13 @@ public class SearchCtl implements Initializable {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (NullPointerException e1) {
-			Alert alert = new Alert(Alert.AlertType.INFORMATION);
-
-			alert.setTitle("");
-            alert.setHeaderText("không tìm thấy khoản vay!");
-
-			alert.showAndWait();
-
-			return;
+		    alertNoLoanFound();
 		}
 	}
 
     public void viewDetails(SearchResult sr) {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(LoginUI.class.getResource("view/personalDetails.fxml"));
+        loader.setLocation(Login.class.getResource("view/PersonalDetails.fxml"));
         try {
             loader.load();
         } catch (IOException e) {
@@ -96,10 +94,18 @@ public class SearchCtl implements Initializable {
         stage.setScene(new Scene(p));
         stage.show();
 
-        PersonalDetailsCtl pd = loader.getController();
+        PersonalDetailsController pd = loader.getController();
         pd.setTextDetails(sr);
     }
 
+    public void alertNoLoanFound() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+        alert.setTitle("");
+        alert.setHeaderText("Không tìm thấy khoản vay!");
+
+        alert.showAndWait();
+    }
     @FXML
     public void executeBack(ActionEvent event) {
         ((Node) (event.getSource())).getScene().getWindow().hide();

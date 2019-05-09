@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
 import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 
-public class BillCtr implements Initializable {
+public class BillController implements Initializable {
 
     @FXML
     private TextArea txtaBill;

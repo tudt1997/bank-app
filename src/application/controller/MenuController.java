@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import application.LoginUI;
+import application.Login;
+import application.model.Message;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-public class MenuControll implements Initializable {
+public class MenuController implements Initializable {
 
 	@FXML
 	Label txtUser;
@@ -24,7 +25,7 @@ public class MenuControll implements Initializable {
 	public void executeRegisterClick(ActionEvent event) {
 		Parent root;
 		try {
-			root = (Parent) FXMLLoader.load((LoginUI.class.getResource("view/LoanRegistration.fxml")));
+			root = (Parent) FXMLLoader.load((Login.class.getResource("view/LoanRegistration.fxml")));
 
 			Stage stage = new Stage();
 
@@ -46,7 +47,7 @@ public class MenuControll implements Initializable {
 	public void searchLoan(ActionEvent event) {
 		Parent root;
 		try {
-			root = (Parent) FXMLLoader.load((LoginUI.class.getResource("view/Search.fxml")));
+			root = (Parent) FXMLLoader.load((Login.class.getResource("view/Search.fxml")));
 
 			Stage stage = new Stage();
 
@@ -71,7 +72,7 @@ public class MenuControll implements Initializable {
 	}
 
 	public void initData(String strUser) {
-        txtUser.setText("Xin chào " + strUser + "!");
+        txtUser.setText(Message.HELLO + strUser + "!");
 	}
 
 }

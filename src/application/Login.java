@@ -2,11 +2,13 @@ package application;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.stage.Stage;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
+import javafx.scene.layout.BorderPane;
 
-public class Registration extends Application {
+public class Login extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -16,9 +18,9 @@ public class Registration extends Application {
 			 * toExternalForm()); primaryStage.setScene(scene); primaryStage.show();
 			 */
 
-			AnchorPane home = (AnchorPane) FXMLLoader.load((getClass().getResource("view/LoanRegistration.fxml")));
+			AnchorPane home = (AnchorPane) FXMLLoader.load((getClass().getResource("view/Login.fxml")));
 
-			primaryStage.setTitle("Đăng ký vay");
+			primaryStage.setTitle("Đăng nhập");
 
 			primaryStage.setScene(new Scene(home));
 

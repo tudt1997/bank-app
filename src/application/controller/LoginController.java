@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import application.LoginUI;
+import application.Login;
 import application.model.Message;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -57,19 +57,19 @@ public class LoginController implements Initializable {
 	
 					alert.showAndWait();
 	
-					FXMLLoader loader = new FXMLLoader((LoginUI.class.getResource("view/Menu.fxml")));
+					FXMLLoader loader = new FXMLLoader((Login.class.getResource("view/Menu.fxml")));
 	
 					// Parent
-					// root=(Parent)FXMLLoader.load((LoginUI.class.getResource("view/Menu.fxml")));
+					// root=(Parent)FXMLLoader.load((Login.class.getResource("view/Menu.fxml")));
 	
 					Stage stage = new Stage();
 	
 					// stage.setScene(new Scene(root));
 					stage.setScene(new Scene((Pane) loader.load()));
 	
-					stage.setTitle("Registration");
+					stage.setTitle("Danh mục");
 	
-					MenuControll controller = loader.<MenuControll>getController();
+					MenuController controller = loader.<MenuController>getController();
 	
 					// set Username for new Window by using DI and event Bus
 					controller.initData(username);
@@ -107,10 +107,7 @@ public class LoginController implements Initializable {
 			 * @Override public void handle(ActionEvent event) { } });
 			 */
 
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (SQLException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
