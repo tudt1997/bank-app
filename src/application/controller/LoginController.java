@@ -1,5 +1,6 @@
 package application.controller;
 
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,13 +18,12 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import java.sql.*;
 
 public class LoginController implements Initializable {
-	@FXML
-	private Button btnLogin;
 
 	@FXML
 	private TextField txtUsername;
@@ -76,7 +76,8 @@ public class LoginController implements Initializable {
 	
 					stage.show();
 	
-					((Node) (event.getSource())).getScene().getWindow().hide();
+//					((Node) (event.getSource())).getScene().getWindow().hide();
+					txtPassword.getScene().getWindow().hide();
 				} else {
 					Alert alert = new Alert(AlertType.ERROR);
 
@@ -114,4 +115,10 @@ public class LoginController implements Initializable {
 		return true;
 	}
 
+	@FXML
+	public void onEnterPressed(javafx.scene.input.KeyEvent keyEvent) {
+		if (keyEvent.getCode() == KeyCode.ENTER) {
+			executeLogin(new ActionEvent());
+		}
+	}
 }

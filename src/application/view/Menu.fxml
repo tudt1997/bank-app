@@ -9,31 +9,10 @@
 <AnchorPane prefHeight="397.0" prefWidth="330.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.MenuController">
    <children>
       <BorderPane prefHeight="397.0" prefWidth="332.0">
-         <top>
-            <MenuBar BorderPane.alignment="CENTER">
-              <menus>
-                <Menu mnemonicParsing="false" text="Ứng dụng">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Đóng" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Chỉnh sửa">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Xóa" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Trợ giúp">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Thông tin" />
-                  </items>
-                </Menu>
-              </menus>
-            </MenuBar>
-         </top>
          <center>
             <AnchorPane prefHeight="358.0" prefWidth="380.0" BorderPane.alignment="CENTER">
                <children>
-                   <GridPane layoutX="65.0" layoutY="115.0" prefHeight="120.0" prefWidth="183.0">
+                   <GridPane layoutX="75.0" layoutY="139.0" prefHeight="120.0" prefWidth="183.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
@@ -45,10 +24,10 @@
                      <children>
                          <Button mnemonicParsing="false" onAction="#searchLoan" prefHeight="30.0" prefWidth="324.0" text="Tìm kiếm khoản vay" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                          <Button mnemonicParsing="false" onAction="#executeRegisterClick" prefHeight="30.0" prefWidth="225.0" text="Mở khoản vay" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                         <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="276.0" text="Đăng xuất" GridPane.rowIndex="2" />
+                         <Button fx:id="btnLogout" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClickLogout" prefHeight="30.0" prefWidth="276.0" text="Đăng xuất" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
-                   <Label fx:id="txtUser" alignment="CENTER" contentDisplay="CENTER" layoutY="53.0" prefHeight="27.0" prefWidth="332.0" text="Xin chào, user" textAlignment="RIGHT" />
+                   <Label fx:id="txtUser" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="65.0" prefHeight="27.0" prefWidth="332.0" text="Xin chào, user" textAlignment="RIGHT" />
                </children>
             </AnchorPane>
          </center>

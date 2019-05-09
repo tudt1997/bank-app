@@ -17,30 +17,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="427.0" prefWidth="423.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.LoginController">
+<AnchorPane onKeyPressed="#onEnterPressed" prefHeight="427.0" prefWidth="423.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.LoginController">
    <children>
       <BorderPane prefHeight="427.0" prefWidth="426.0">
-         <top>
-            <MenuBar BorderPane.alignment="CENTER">
-              <menus>
-                <Menu mnemonicParsing="false" text="Ứng dụng">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Đóng" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Chỉnh sửa">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Xóa" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Trợ giúp">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Thông tin" />
-                  </items>
-                </Menu>
-              </menus>
-            </MenuBar>
-         </top>
          <center>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
@@ -62,7 +41,7 @@
                   </GridPane>
                    <Button fx:id="btnLogin" layoutX="141.0" layoutY="223.0" mnemonicParsing="false" onAction="#executeLogin" text="Đăng nhập" />
                   <Separator layoutX="114.0" layoutY="88.0" prefWidth="200.0" />
-                   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="3.0" layoutY="29.0" prefHeight="27.0" prefWidth="420.0" text="Ứng dụng quản lý vay lãi ngân hàng" />
+                   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-3.0" layoutY="29.0" prefHeight="27.0" prefWidth="426.0" text="Ứng dụng quản lý vay lãi ngân hàng" />
                </children>
             </AnchorPane>
          </center>
