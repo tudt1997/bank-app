@@ -6,11 +6,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 public class PaymentController implements Initializable {
 
@@ -30,6 +34,14 @@ public class PaymentController implements Initializable {
 
     @FXML
     private TextField txtPaymentMonney;
+
+    @FXML
+    private DatePicker dtPayment;
+
+    @FXML
+    private TextField txtInterest;
+
+    private Date startDate;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -84,7 +96,7 @@ public class PaymentController implements Initializable {
 
         try {
 
-            if(Float.valueOf(txtMonney.getText())-monney<0){
+            if (Float.valueOf(txtMonney.getText()) - monney < 0) {
 
                 Alert alert = new Alert(Alert.AlertType.ERROR);
 
@@ -100,7 +112,24 @@ public class PaymentController implements Initializable {
 
             }
 
-            Providers.updateRecordLoan(id,Float.valueOf(txtMonney.getText())-monney);
+//            long payDateInMili = Date.from(dtPayment.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()).getTime();
+//            long diffInMillies = payDateInMili - startDate.getTime();
+//            long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+//            if(diff < 0){
+//                Alert alert = new Alert(Alert.AlertType.WARNING);
+//                alert.setContentText("Ngày trả tiền phải muộn hơn ngày vay tiền!");
+//                alert.showAndWait();
+//                return;
+//            }
+//            else if(payDateInMili > System.currentTimeMillis()){
+//                Alert alert = new Alert(Alert.AlertType.WARNING);
+//                alert.setContentText("Chưa đến ngày trả tiền!!");
+//                alert.showAndWait();
+//                return;
+//            }
+
+
+            Providers.updateRecordLoan(id, Float.valueOf(txtMonney.getText()) - monney);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Trả tiền");
@@ -127,13 +156,17 @@ public class PaymentController implements Initializable {
 
     }
 
-    public void setAllField(int id,String type,String monney){
+    public void setAllField(int id, String type, String monney, float interest, Date dateLoan) {
 
         this.id=id;
 
         txtType.setText(type);
 
         txtMonney.setText(monney);
+
+        txtInterest.setText(String.valueOf(interest));
+
+        startDate = dateLoan;
 
     }
 

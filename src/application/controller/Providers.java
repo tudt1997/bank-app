@@ -12,6 +12,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 
 import application.model.PersonalDetails;
 import application.model.SearchResult;
@@ -147,6 +148,12 @@ public class Providers {
 	}
 
     public static ArrayList<SearchResult> searchLoanRecord(String searchType, String keyWord) throws SQLException {
+		try {
+			System.out.println(Long.parseLong(keyWord));
+		} catch (NumberFormatException e) {
+			return null;
+		}
+
         ArrayList<SearchResult> returnList = new ArrayList<SearchResult>();
 
 		connection = getConnection();
@@ -208,8 +215,14 @@ public class Providers {
 
 		connection = getConnection();
 
+		try {
+			System.out.println(Long.parseLong(keyWord));
+		} catch (NumberFormatException e) {
+			return null;
+		}
+
 		if (searchType.equals("IdentityCard")) {
-			String pquery = "SELECT Id FROM person WHERE " + searchType + " LIKE '%" + keyWord + "%'";
+			String pquery = "SELECT Id FROM person WHERE " + searchType + "=" + keyWord;
 			Statement pstmt = connection.createStatement();
 			ResultSet pRsPerson = pstmt.executeQuery(pquery);
 			if (!pRsPerson.next()) return null;
@@ -221,9 +234,10 @@ public class Providers {
 		Statement stmt = connection.createStatement();
 		Statement stmt1 = connection.createStatement();
 		Statement stmt2 = connection.createStatement();
+		Statement stmt3 = connection.createStatement();
 
-		String query = "SELECT LoanId, PersonId, AmountOfMoney,PaymentMethod,Id FROM recordloan WHERE " + searchType + " LIKE '%"
-				+ keyWord + "%'";
+		String query = "SELECT LoanId, PersonId, AmountOfMoney,PaymentMethod,Id,startDate FROM recordloan WHERE " + searchType + "="
+				+ keyWord;
 		System.out.println(query);
 		ResultSet rsRecordLoan = stmt.executeQuery(query);
 		// Ma khoan vay & so tien vay
@@ -234,6 +248,9 @@ public class Providers {
 
 		ResultSet rsFullname;
 		ResultSet rsPerson;
+		ResultSet rsLoan;
+
+		Date startDate;
 
 		while (rsRecordLoan.next()) {
 			System.out.println("abcc");
@@ -253,17 +270,28 @@ public class Providers {
 			// Chu tai khoan
 			if (!rsFullname.next())
 				return null;
+
 			chutaikhoan = rsFullname.getString(1) + " " + rsFullname.getString(2) + " " + rsFullname.getString(3);
 
 			String paymentMethod=rsRecordLoan.getString("PaymentMethod");
+
+			String queryFromLoan = "Select * from loan where id=" + rsRecordLoan.getInt("LoanId");
+
+			rsLoan = stmt3.executeQuery(queryFromLoan);
+
+			if (!rsLoan.next()) return null;
+
+			float interest = rsLoan.getFloat("InterestRate");
 
 			System.out.println("method"+paymentMethod);
 
 			int id=rsRecordLoan.getInt("Id");
 
+			startDate = rsRecordLoan.getDate("startDate");
+
 			System.out.println("id: "+id);
 
-			returnList.add(new SearchResult(id,makhoanvay, sotaikhoan, chutaikhoan, sotienvay, paymentMethod));
+			returnList.add(new SearchResult(id, makhoanvay, sotaikhoan, chutaikhoan, sotienvay, paymentMethod, startDate, interest));
 		}
 		return returnList;
 	}
@@ -306,7 +334,6 @@ public class Providers {
         ResultSet rs4 = stmt.executeQuery(query);
         rs4.next();
         pd.setCoquanText(rs4.getString(1));
-
         return pd;
 	}
 

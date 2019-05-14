@@ -26,7 +26,6 @@ public class SearchController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-        tableSearchResult.setPlaceholder(new Label(""));
 	}
 
 	@FXML
@@ -69,8 +68,10 @@ public class SearchController implements Initializable {
             if (searchResultList.size() == 0)
                 alertNoLoanFound();
             else
-                for (SearchResult searchrs : searchResultList)
+                for (SearchResult searchrs : searchResultList) {
+                    searchrs.print();
                     tableSearchResult.getItems().add(searchrs);
+                }
 
             tableSearchResult.setOnMouseClicked(event2 -> {
                 if (event2.getClickCount() == 2) {

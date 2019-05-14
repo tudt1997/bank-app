@@ -184,7 +184,6 @@ public class LoanRegistrationController implements Initializable {
         } else {
             btnPrintBill.setDisable(false);
         }
-
     }
 
     public boolean checkTabFirst() {

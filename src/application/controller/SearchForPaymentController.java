@@ -102,7 +102,7 @@ public class SearchForPaymentController implements Initializable {
         stage.show();
 
         PaymentController pd = loader.getController();
-        pd.setAllField(sr.getId(),sr.getPaymentMethod(),sr.getAmount());
+        pd.setAllField(sr.getId(), sr.getPaymentMethod(), sr.getAmount(), sr.getInterest(), sr.getDtPayment());
     }
 
     public void alertNoLoanFound() {

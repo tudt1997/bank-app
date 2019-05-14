@@ -1,5 +1,7 @@
 package application.model;
 
+import java.util.Date;
+
 public class SearchResult {
     private int id;
     private String loanID;
@@ -7,6 +9,19 @@ public class SearchResult {
     private String personname;
     private String amount;
     private String paymentMethod;
+    private Date dtPayment;
+    private float interest;
+
+    public SearchResult(int id, String loanID, String accID, String personname, String amount, String paymentMethod, Date dtPayment, float interest) {
+        this.id = id;
+        this.loanID = loanID;
+        this.accID = accID;
+        this.personname = personname;
+        this.amount = amount;
+        this.paymentMethod = paymentMethod;
+        this.dtPayment = dtPayment;
+        this.interest = interest;
+    }
 
     public SearchResult(String loanID, String accID, String personname, String amount) {
         this.loanID = loanID;
@@ -21,6 +36,15 @@ public class SearchResult {
         this.personname = personname;
         this.amount = amount;
         paymentMethod = paymentMethod;
+    }
+
+    public void print() {
+        System.out.println(id);
+        System.out.println(loanID);
+        System.out.println(accID);
+        System.out.println(personname);
+        System.out.println(amount);
+        System.out.println(paymentMethod);
     }
 
     public SearchResult(int id, String loanID, String accID, String personname, String amount, String paymentMethod) {
@@ -66,6 +90,22 @@ public class SearchResult {
 
     public String getPaymentMethod() {
         return paymentMethod;
+    }
+
+    public Date getDtPayment() {
+        return dtPayment;
+    }
+
+    public void setDtPayment(Date dtPayment) {
+        this.dtPayment = dtPayment;
+    }
+
+    public float getInterest() {
+        return interest;
+    }
+
+    public void setInterest(float interest) {
+        this.interest = interest;
     }
 
     public void setPaymentMethod(String paymentMethod) {
