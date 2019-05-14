@@ -29,6 +29,10 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 public class TestLoginUI extends ApplicationTest {
+	enum EnterType {
+		CLICK,
+		ENTER
+	}
 	LoginController loginController;
 
 	@Override
@@ -65,8 +69,7 @@ public class TestLoginUI extends ApplicationTest {
 		release(new KeyCode[] {});
 		release(new MouseButton[] {});
 	}
-
-	public void testUI(String username, String password, String expectedHeader, String expectedContent) {
+	private void enterUsernameAndPassword(String username, String password) {
 		if (!username.equals("")) {
 			clickOn("#txtUsername");
 			write(username);
@@ -76,9 +79,9 @@ public class TestLoginUI extends ApplicationTest {
 			clickOn("#txtPassword");
 			write(password);
 		}
+	}
 
-		clickOn("#btnLogin");
-
+	private void assertDialog(String expectedHeader, String expectedContent) {
 		Stage actualAlertDialog = getTopModalStage();
 		DialogPane dialogPane = (DialogPane) actualAlertDialog.getScene().getRoot();
 
@@ -86,29 +89,54 @@ public class TestLoginUI extends ApplicationTest {
 		Assert.assertEquals(expectedContent, dialogPane.getContentText());
 	}
 
+	public void testLoginClick(String username, String password, String expectedHeader, String expectedContent) {
+		enterUsernameAndPassword(username, password);
+
+		clickOn("#btnLogin");
+
+		assertDialog(expectedHeader, expectedContent);
+	}
+
+
+
+	public void testLoginEnter(String username, String password, String expectedHeader, String expectedContent) {
+		enterUsernameAndPassword(username, password);
+
+		push(KeyCode.ENTER);
+
+		assertDialog(expectedHeader, expectedContent);
+	}
+
+
+
 	@Test
-	public void testLoginSuccess() {
-		testUI("chinhvu", "123", Message.LOGIN_SUCCESS, Message.HELLO + "chinhvu");
+	public void testLoginSuccess1() {
+		testLoginEnter("1", "1", Message.LOGIN_SUCCESS, Message.HELLO + "1");
+	}
+
+	@Test
+	public void testLoginSuccess2() {
+		testLoginClick("1", "1", Message.LOGIN_SUCCESS, Message.HELLO + "1");
 	}
 
 	@Test
 	public void testLoginFail1() {
-		testUI("", "", Message.LOGIN_FAIL, Message.EMPTY_USERNAME_PASSWORD);
+		testLoginEnter("1", "2", Message.LOGIN_FAIL, Message.WRONG_USERNAME_PASSWORD);
 	}
 
 	@Test
 	public void testLoginFail2() {
-		testUI("chinhvu", "", Message.LOGIN_FAIL, Message.EMPTY_USERNAME_PASSWORD);
+		testLoginEnter("ndaj812&", "1", Message.LOGIN_FAIL, Message.WRONG_USERNAME_PASSWORD);
 	}
 
 	@Test
 	public void testLoginFail3() {
-		testUI("", "1234", Message.LOGIN_FAIL, Message.EMPTY_USERNAME_PASSWORD);
+		testLoginEnter("", "4", Message.LOGIN_FAIL, Message.EMPTY_USERNAME_PASSWORD);
 	}
 
 	@Test
 	public void testLoginFail4() {
-		testUI("chinhvu", "1234", Message.LOGIN_FAIL, Message.WRONG_USERNAME_PASSWORD);
+		testLoginEnter("1", "", Message.LOGIN_FAIL, Message.EMPTY_USERNAME_PASSWORD);
 	}
 
 	private javafx.stage.Stage getTopModalStage() {

@@ -49,12 +49,12 @@
                                                 <Insets left="12.0" />
                                             </GridPane.margin>
                                         </DatePicker>
-                                        <TextField id="tfAddress" fx:id="txtAddressPerson" disable="true" editable="false" prefHeight="30.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                        <TextField fx:id="txtAddressPerson" disable="true" editable="false" prefHeight="30.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                             <GridPane.margin>
                                                 <Insets left="12.0" />
                                             </GridPane.margin>
                                         </TextField>
-                                        <TextField id="tfPhone" fx:id="txtPhoneNumber" disable="true" editable="false" prefHeight="30.0" prefWidth="365.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                        <TextField fx:id="txtPhoneNumber" disable="true" editable="false" prefHeight="30.0" prefWidth="365.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                             <GridPane.margin>
                                                 <Insets left="12.0" />
                                             </GridPane.margin>

@@ -25,27 +25,6 @@
 	<!-- TODO Add Nodes -->
 	<center>
 	</center>
-	<top>
-		<MenuBar BorderPane.alignment="CENTER">
-			<menus>
-				<Menu mnemonicParsing="false" text="Ứng dụng">
-					<items>
-						<MenuItem mnemonicParsing="false" text="Đóng" />
-					</items>
-				</Menu>
-				<Menu mnemonicParsing="false" text="Chỉnh sửa">
-					<items>
-						<MenuItem mnemonicParsing="false" text="Xóa" />
-					</items>
-				</Menu>
-				<Menu mnemonicParsing="false" text="Trợ giúp">
-					<items>
-						<MenuItem mnemonicParsing="false" text="Thông tin" />
-					</items>
-				</Menu>
-			</menus>
-		</MenuBar>
-	</top>
 	<center>
 		<GridPane prefHeight="468.0" prefWidth="656.0" BorderPane.alignment="CENTER">
 			<columnConstraints>
@@ -91,10 +70,10 @@
 
 				<TableView fx:id="tableSearchResult" prefHeight="287.0" prefWidth="656.0" GridPane.rowIndex="1">
 					<columns>
-						<TableColumn fx:id="column1Rs" prefWidth="112.0" text="Mã khoản vay" />
-						<TableColumn fx:id="column2Rs" minWidth="0.0" prefWidth="143.0" text="Số tài khoản" />
+						<TableColumn fx:id="column1Rs" prefWidth="112.0" style="-fx-alignment: CENTER_RIGHT;" text="Mã khoản vay" />
+						<TableColumn fx:id="column2Rs" minWidth="0.0" prefWidth="143.0" style="-fx-alignment: CENTER_RIGHT;" text="Số tài khoản" />
 						<TableColumn fx:id="column3Rs" prefWidth="119.0" text="Chủ tài khoản" />
-						<TableColumn fx:id="column4Rs" prefWidth="122.0" text="Số tiền vay" />
+						<TableColumn fx:id="column4Rs" prefWidth="122.0" style="-fx-alignment: CENTER_RIGHT;" text="Số tiền vay" />
 						<TableColumn fx:id="column5Rs" prefWidth="152.0" text="Phương thức vay" />
 					</columns>
 				</TableView>

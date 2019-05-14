@@ -23,10 +23,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import org.testfx.matcher.control.LabeledMatchers;
-import org.testfx.matcher.control.TextFlowMatchers;
-import org.testfx.matcher.control.TextInputControlMatchers;
-import org.testfx.matcher.control.TextMatchers;
+import org.testfx.matcher.control.*;
 
 public class TestRegistrationUI extends ApplicationTest {
 	private LoanRegistrationController loanRegistrationController;
@@ -54,7 +51,17 @@ public class TestRegistrationUI extends ApplicationTest {
 		release(new MouseButton[] {});
 	}
 
-	private void doSearch(String idCard) {
+	private void doSearchEnter(String idCard) {
+
+		if (!idCard.equals("")) {
+			clickOn("#txtIdCard");
+			write(idCard);
+		}
+
+		push(KeyCode.ENTER);
+	}
+
+	private void doSearchClick(String idCard) {
 
 		if (!idCard.equals("")) {
 			clickOn("#txtIdCard");
@@ -71,21 +78,32 @@ public class TestRegistrationUI extends ApplicationTest {
 		Assert.assertEquals(Message.INVALID_PERSON_ID, dialogPane.getHeaderText());
 		Assert.assertEquals(Message.ENTER_AGAIN, dialogPane.getContentText());
 	}
+
 	@Test
-	public void testTab1Success() {
-		doSearch("123456");
+	public void testTab1Success1() {
+		doSearchEnter("123456");
 		FxAssert.verifyThat("#txtName", TextInputControlMatchers.hasText("Nguyễn Đức Anh"));
+		FxAssert.verifyThat("#txtAddressPerson", TextInputControlMatchers.hasText("42 Trần Phú Hà Đông Hà Nội"));
+		FxAssert.verifyThat("#txtPhone", TextInputControlMatchers.hasText("123456789"));
+	}
+
+	@Test
+	public void testTab1Success2() {
+		doSearchClick("123456");
+		FxAssert.verifyThat("#txtName", TextInputControlMatchers.hasText("Nguyễn Đức Anh"));
+		FxAssert.verifyThat("#txtAddressPerson", TextInputControlMatchers.hasText("42 Trần Phú Hà Đông Hà Nội"));
+		FxAssert.verifyThat("#txtPhone", TextInputControlMatchers.hasText("123456789"));
 	}
 
 	@Test
 	public void testTab1Fail1() {
-		doSearch("");
+		doSearchEnter("");
 		checkDialogFail();
 	}
 
 	@Test
 	public void testTab1Fail2() {
-		doSearch("a");
+		doSearchEnter("a");
 		checkDialogFail();
 	}
 

@@ -27,6 +27,7 @@ public class SearchForPaymentController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         tableSearchResult.setPlaceholder(new Label(""));
+        cbType.getSelectionModel().selectFirst();
     }
 
     @FXML

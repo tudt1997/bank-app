@@ -23,10 +23,10 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                         <Button mnemonicParsing="false" onAction="#searchLoan" prefHeight="30.0" prefWidth="324.0" text="Tìm kiếm khoản vay" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                         <Button mnemonicParsing="false" onAction="#searchLoan" prefHeight="30.0" prefWidth="324.0" text="Tìm kiếm khoản vay" visible="false" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                          <Button mnemonicParsing="false" onAction="#executeRegisterClick" prefHeight="30.0" prefWidth="225.0" text="Mở khoản vay" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                          <Button fx:id="btnLogout" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClickLogout" prefHeight="30.0" prefWidth="276.0" text="Đăng xuất" GridPane.rowIndex="3" />
-                        <Button fx:id="btnPayment" mnemonicParsing="false" onAction="#onClickPayment" prefHeight="30.0" prefWidth="201.0" text="Trả tiền vay" GridPane.rowIndex="2" />
+                        <Button fx:id="btnPayment" mnemonicParsing="false" onAction="#onClickPayment" prefHeight="30.0" prefWidth="201.0" text="Tìm kiếm khoản vay" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                    <Label fx:id="txtUser" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="65.0" prefHeight="27.0" prefWidth="332.0" text="Xin chào, user" textAlignment="RIGHT" />

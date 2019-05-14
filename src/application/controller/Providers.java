@@ -209,7 +209,7 @@ public class Providers {
 		connection = getConnection();
 
 		if (searchType.equals("IdentityCard")) {
-			String pquery = "SELECT Id FROM person WHERE " + searchType + " LIKE '%" + keyWord + "%'";
+			String pquery = "SELECT Id FROM person WHERE " + searchType + " = " + keyWord;
 			Statement pstmt = connection.createStatement();
 			ResultSet pRsPerson = pstmt.executeQuery(pquery);
 			if (!pRsPerson.next()) return null;
@@ -239,7 +239,7 @@ public class Providers {
 			System.out.println("abcc");
 			makhoanvay = Integer.toString(rsRecordLoan.getInt(1));
 			int personId = rsRecordLoan.getInt(2);
-			sotienvay = Float.toString(rsRecordLoan.getFloat(3));
+			sotienvay = String.format("%.2f", rsRecordLoan.getFloat(3));
 
 			query = "SELECT AccountId, FullNameId FROM person WHERE Id=" + personId;
 			rsPerson = stmt1.executeQuery(query);
