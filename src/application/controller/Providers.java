@@ -222,8 +222,8 @@ public class Providers {
 		Statement stmt1 = connection.createStatement();
 		Statement stmt2 = connection.createStatement();
 
-		String query = "SELECT LoanId, PersonId, AmountOfMoney,PaymentMethod,Id FROM recordloan WHERE " + searchType + " LIKE '%"
-				+ keyWord + "%'";
+		String query = "SELECT LoanId, PersonId, AmountOfMoney,PaymentMethod,Id FROM recordloan WHERE " + searchType + " = "
+				+ keyWord;
 		System.out.println(query);
 		ResultSet rsRecordLoan = stmt.executeQuery(query);
 		// Ma khoan vay & so tien vay
