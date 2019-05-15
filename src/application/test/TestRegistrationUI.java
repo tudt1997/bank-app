@@ -84,7 +84,7 @@ public class TestRegistrationUI extends ApplicationTest {
 		doSearchEnter("123456");
 		FxAssert.verifyThat("#txtName", TextInputControlMatchers.hasText("Nguyễn Đức Anh"));
 		FxAssert.verifyThat("#txtAddressPerson", TextInputControlMatchers.hasText("42 Trần Phú Hà Đông Hà Nội"));
-		FxAssert.verifyThat("#txtPhone", TextInputControlMatchers.hasText("123456789"));
+		FxAssert.verifyThat("#txtPhoneNumber", TextInputControlMatchers.hasText("123456789"));
 	}
 
 	@Test
@@ -92,7 +92,7 @@ public class TestRegistrationUI extends ApplicationTest {
 		doSearchClick("123456");
 		FxAssert.verifyThat("#txtName", TextInputControlMatchers.hasText("Nguyễn Đức Anh"));
 		FxAssert.verifyThat("#txtAddressPerson", TextInputControlMatchers.hasText("42 Trần Phú Hà Đông Hà Nội"));
-		FxAssert.verifyThat("#txtPhone", TextInputControlMatchers.hasText("123456789"));
+		FxAssert.verifyThat("#txtPhoneNumber", TextInputControlMatchers.hasText("123456789"));
 	}
 
 	@Test
@@ -107,6 +107,17 @@ public class TestRegistrationUI extends ApplicationTest {
 		checkDialogFail();
 	}
 
+	@Test
+	public void testTab2() {
+		testTab1Success1();
+
+		clickOn("#btnNext");
+
+		System.out.println(lookup("#tp1").query().isDisabled());
+		System.out.println(lookup("#tp2").query().isDisabled());
+		System.out.println(lookup("#tp3").query().isDisabled());
+		Assert.assertTrue(lookup("#tp1").query().isDisabled());
+	}
 	private javafx.stage.Stage getTopModalStage() {
 		// Get a list of windows but ordered from top[0] to bottom[n] ones.
 		// It is needed to get the first found modal window.

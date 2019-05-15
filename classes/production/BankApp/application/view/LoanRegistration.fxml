@@ -22,7 +22,7 @@
 	<children>
         <TabPane fx:id="tpParent" minWidth="-Infinity" prefHeight="475.0" prefWidth="500.0" tabClosingPolicy="UNAVAILABLE">
 			<tabs>
-				<Tab id="tab1" fx:id="tp1" disable="false" text="Thông tin cá nhân">
+				<Tab fx:id="tp1" disable="false" text="Thông tin cá nhân">
 					<content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="81.0" prefWidth="350.0">
 							<children>
@@ -94,7 +94,7 @@
 						</AnchorPane>
 					</content>
 				</Tab>
-				<Tab id="tab2" fx:id="tp2" disable="true" text="Thông tin nghề nghiệp">
+				<Tab fx:id="tp2" disable="true" text="Thông tin nghề nghiệp">
 					<content>
 						<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
 							<children>
@@ -178,7 +178,7 @@
 						</AnchorPane>
 					</content>
 				</Tab>
-				<Tab id="tab3" fx:id="tp3" disable="true" text="Thông tin khoản vay">
+				<Tab fx:id="tp3" disable="true" text="Thông tin khoản vay">
 					<content>
 						<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
 							<children>
