@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import application.model.Message;
+import javafx.scene.control.Tab;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -108,16 +109,51 @@ public class TestRegistrationUI extends ApplicationTest {
 	}
 
 	@Test
-	public void testTab2() {
+	public void testTab2Success() {
 		testTab1Success1();
 
 		clickOn("#btnNext");
 
-		System.out.println(lookup("#tp1").query().isDisabled());
-		System.out.println(lookup("#tp2").query().isDisabled());
-		System.out.println(lookup("#tp3").query().isDisabled());
-		Assert.assertTrue(lookup("#tp1").query().isDisabled());
+
+//		System.out.println(lookup("#tp1").query().isDisable());
+//		System.out.println(lookup("#tp2").query().isDisable());
+//		System.out.println(lookup("#tp3").query().isDisable());
+
+		Assert.assertTrue(loanRegistrationController.getTp1().isDisable());
+		Assert.assertFalse(loanRegistrationController.getTp2().isDisable());
+		Assert.assertTrue(loanRegistrationController.getTp3().isDisable());
+
+		Assert.assertFalse(lookup("#btnPrev").queryButton().isDisable());
+		Assert.assertFalse(lookup("#btnNext").queryButton().isDisable());
+		Assert.assertTrue(lookup("#btnFinish").queryButton().isDisable());
 	}
+
+	@Test
+	public void testTab3Fail1() {
+		testTab2Success();
+
+		clickOn("#btnFinish");
+
+		Stage actualAlertDialog = getTopModalStage();
+		DialogPane dialogPane = (DialogPane) actualAlertDialog.getScene().getRoot();
+
+		Assert.assertEquals(Message.LACK_INFORMATION, dialogPane.getHeaderText());
+		Assert.assertEquals(Message.ENTER_AGAIN, dialogPane.getContentText());
+	}
+
+//	public void testTab3Fail2() {
+//		testTab2Success();
+//
+//
+//		clickOn("#btnDisplayInterest");
+//
+//		Stage actualAlertDialog = getTopModalStage();
+//		DialogPane dialogPane = (DialogPane) actualAlertDialog.getScene().getRoot();
+//
+//		Assert.assertEquals(Message., dialogPane.getHeaderText());
+//		Assert.assertEquals(Message.ENTER_AGAIN, dialogPane.getContentText());
+//	}
+
 	private javafx.stage.Stage getTopModalStage() {
 		// Get a list of windows but ordered from top[0] to bottom[n] ones.
 		// It is needed to get the first found modal window.

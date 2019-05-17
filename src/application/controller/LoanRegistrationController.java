@@ -178,7 +178,13 @@ public class LoanRegistrationController implements Initializable {
             tp2.setDisable(true);
             tp3.setDisable(false);
             btnPrintBill.setDisable(false);
-
+//            txtMoneyLoan.requestFocus();
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    txtMoneyLoan.requestFocus();
+                }
+            });
             SingleSelectionModel<Tab> model = tpParent.getSelectionModel();
             model.selectNext();
         } else {
@@ -307,12 +313,19 @@ public class LoanRegistrationController implements Initializable {
             tp2.setDisable(true);
             btnFinish.setDisable(true);
             btnPrintBill.setDisable(true);
+
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    txtIdCard.requestFocus();
+                }
+            });
         } else if (!tp3.isDisable()) {
             btnNext.setDisable(false);
             btnFinish.setDisable(true);
             tp2.setDisable(false);
             tp3.setDisable(true);
-            btnPrintBill.setDisable(false);
+            btnPrintBill.setDisable(true);
         }
 
     }
@@ -329,32 +342,30 @@ public class LoanRegistrationController implements Initializable {
         // Tab 3
 
         cbTypeLoan.getItems().removeAll(cbTypeLoan.getItems());
-
         cbTypeLoan.getItems().addAll("Vay theo món", "Theo hạn mức tín dụng", "Vay thấu chi");
+        cbTypeLoan.getSelectionModel().selectFirst();
 
         cbTypePurposeLoan.getItems().removeAll(cbTypePurposeLoan.getItems());
-
         cbTypePurposeLoan.getItems().addAll("Vay nhu cầu nhà ở", "Vay mua ô tô", "Vay du học",
                 "Vay sản xuất kinh doanh", "Vay tiêu dùng không tài sản đảm bảo", "Vay tiêu dùng có tài sản đảm bảo");
+        cbTypePurposeLoan.getSelectionModel().selectFirst();
 
         cbPayOriginalDebt.getItems().removeAll(cbPayOriginalDebt.getItems());
-
         cbPayOriginalDebt.getItems().addAll("Hàng tháng", "Hàng quý", "Bán niên", "1 lần vào cuối kỳ");
+        cbPayOriginalDebt.getSelectionModel().selectFirst();
 
         cbInterestPay.getItems().removeAll(cbInterestPay.getItems());
-
         cbInterestPay.getItems().addAll("Hàng tháng", "Khác");
+        cbInterestPay.getSelectionModel().selectFirst();
 
         cbWithdrawalFundMethod.getItems().removeAll(cbWithdrawalFundMethod.getItems());
-
         cbWithdrawalFundMethod.getItems().addAll("Tiền mặt", "Chuyển khoản");
+        cbWithdrawalFundMethod.getSelectionModel().selectFirst();
 
         cbPaymentMethod.getItems().removeAll(cbPaymentMethod.getItems());
-
         cbPaymentMethod.getItems().addAll("Tự động trừ tài khoản", "Nộp tiền mặt hoặc chuyển khoản");
+        cbPaymentMethod.getSelectionModel().selectFirst();
 
-        cbGender.setOpacity(1);
-        cbGender.setOpacity(1);
 
         Platform.runLater(new Runnable() {
             @Override
@@ -627,6 +638,8 @@ public class LoanRegistrationController implements Initializable {
             stage.setScene(new Scene(root));
 
             stage.setTitle("In hóa đơn vay");
+
+            stage.setResizable(false);
 
             stage.show();
 

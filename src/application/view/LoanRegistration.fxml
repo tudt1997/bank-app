@@ -22,7 +22,7 @@
 	<children>
         <TabPane fx:id="tpParent" minWidth="-Infinity" prefHeight="475.0" prefWidth="500.0" tabClosingPolicy="UNAVAILABLE">
 			<tabs>
-				<Tab fx:id="tp1" disable="false" text="Thông tin cá nhân">
+				<Tab id="tp1" fx:id="tp1" disable="false" text="Thông tin cá nhân">
 					<content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="81.0" prefWidth="350.0">
 							<children>
@@ -94,7 +94,7 @@
 						</AnchorPane>
 					</content>
 				</Tab>
-				<Tab fx:id="tp2" disable="true" text="Thông tin nghề nghiệp">
+				<Tab id="tp2" fx:id="tp2" disable="true" text="Thông tin nghề nghiệp">
 					<content>
 						<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
 							<children>
@@ -267,7 +267,7 @@
                         <Insets left="12.0" />
                     </GridPane.margin>
                 </Button>
-                <Button id="btnBack" fx:id="btnPrev" disable="true" mnemonicParsing="false" onAction="#executePrev" prefHeight="25.0" prefWidth="135.0" text="Quay lại" GridPane.columnIndex="1">
+                <Button fx:id="btnPrev" disable="true" mnemonicParsing="false" onAction="#executePrev" prefHeight="25.0" prefWidth="135.0" text="Quay lại" GridPane.columnIndex="1">
                     <GridPane.margin>
                         <Insets left="12.0" />
                     </GridPane.margin>

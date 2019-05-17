@@ -76,8 +76,13 @@ public class SearchForPaymentController implements Initializable {
 
             tableSearchResult.setOnMouseClicked(event2 -> {
                 if (event2.getClickCount() == 2) {
-                    SearchResult clicked = (SearchResult) tableSearchResult.getSelectionModel().getSelectedItem();
-                    viewDetails(clicked);
+                    System.out.println(tableSearchResult.getSelectionModel().getSelectedIndex());
+                    System.out.println(tableSearchResult.getItems().size());
+                    int index = tableSearchResult.getSelectionModel().getSelectedIndex();
+                    if (index != -1 && index < tableSearchResult.getItems().size()) {
+                        SearchResult sr = (SearchResult) tableSearchResult.getSelectionModel().getSelectedItem();
+                        payLoan(sr);
+                    }
                 }
             });
 
@@ -88,7 +93,20 @@ public class SearchForPaymentController implements Initializable {
         }
     }
 
-    public void viewDetails(SearchResult sr) {
+    @FXML
+    public void onClickViewDetails() {
+        SearchResult sr = (SearchResult) tableSearchResult.getSelectionModel().getSelectedItem();
+        viewDetails(sr);
+    }
+
+    @FXML
+    public void onClickPayLoan() {
+        SearchResult sr = (SearchResult) tableSearchResult.getSelectionModel().getSelectedItem();
+        payLoan(sr);
+    }
+
+
+    public void payLoan(SearchResult sr) {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Login.class.getResource("view/DetailPayment.fxml"));
         try {
@@ -100,10 +118,30 @@ public class SearchForPaymentController implements Initializable {
         Parent p = loader.getRoot();
         Stage stage = new Stage();
         stage.setScene(new Scene(p));
+        stage.setResizable(false);
         stage.show();
 
         PaymentController pd = loader.getController();
         pd.setAllField(sr.getId(),sr.getPaymentMethod(),sr.getAmount());
+    }
+
+    public void viewDetails(SearchResult sr) {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Login.class.getResource("view/PersonalDetails.fxml"));
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Parent p = loader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(p));
+        stage.setResizable(false);
+        stage.show();
+
+        PersonalDetailsController pd = loader.getController();
+        pd.setTextDetails(sr);
     }
 
     public void alertNoLoanFound() {

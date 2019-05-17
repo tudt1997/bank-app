@@ -44,8 +44,8 @@
 					<children>
 						<Label text="Hình thức vay" />
 						<Label text="Số tiền vay" GridPane.rowIndex="1" />
-						<TextField fx:id="txtType" editable="false" GridPane.columnIndex="1" />
-						<TextField fx:id="txtMonney" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+						<TextField fx:id="txtType" disable="true" editable="false" GridPane.columnIndex="1" />
+						<TextField fx:id="txtMonney" disable="true" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label text="Số tiền trả" GridPane.rowIndex="2" />
                   <TextField fx:id="txtPaymentMonney" prefHeight="31.0" prefWidth="152.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
@@ -57,8 +57,8 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button fx:id="btnConfirm" mnemonicParsing="false" onAction="#executeConfirm" text="Xác nhận" />
-                        <Button fx:id="btnBack" mnemonicParsing="false" prefHeight="31.0" prefWidth="90.0" onAction="#executeBack" text="Quay lại" GridPane.columnIndex="1" />
+                        <Button fx:id="btnConfirm" mnemonicParsing="false" onAction="#executeConfirm" prefHeight="30.0" text="Xác nhận" />
+                        <Button fx:id="btnBack" mnemonicParsing="false" onAction="#executeBack" prefHeight="30.0" text="Quay lại" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>
 					</children>

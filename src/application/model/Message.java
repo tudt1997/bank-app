@@ -10,7 +10,8 @@ public class Message {
 	public static final String WRONG_RANGE_DATE = "Sai khoảng ngày!";
 	public static final String WRONG_BEGIN_DATE = "Sai ngày bắt đầu!";
 	public static final String WRONG_END_DATE = "Sai ngày kết thúc!";
-	public static final String INVALID_FORMAT_MONEY = "Nhập không đúng định dạng tiền!";
+	public static final String INVALID_FORMAT_MONEY = "Nhập sai định dạng tiền!";
 	public static final String WARNING = "Cảnh báo!";
 	public static final String INVALID_PERSON_ID = "CMT không hợp lệ!";
+	public static final String LACK_INFORMATION = "Nhập thiếu thông tin";
 }

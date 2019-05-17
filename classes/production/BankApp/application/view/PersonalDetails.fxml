@@ -1,30 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.PersonalDetailsController">
-
-   <Label id="hotenLabel" layoutX="107.0" layoutY="38.0" text="Họ tên: " />
-   <Label id="taikhoanLabel" layoutX="107.0" layoutY="73.0" text="Tài khoản: " />
-   <Label id="diachiLabel" layoutX="107.0" layoutY="108.0" text="Địa chỉ: " />
-   <Label id="coquanLabel" layoutX="107.0" layoutY="143.0" text="Cơ quan: " />
-   <Label id="gioitinhLabel" layoutX="107.0" layoutY="178.0" text="Giới tính: " />
-   <Label id="hochieuLabel" layoutX="107.0" layoutY="213.0" text="Hộ chiếu: " />
-   <Label id="cmndLabel" layoutX="107.0" layoutY="248.0" text="CMND: " />
-   <Label id="ngaysinhLabel" layoutX="107.0" layoutY="283.0" text="Ngày sinh: " />
-   <Label id="dienthoaiLabel" layoutX="107.0" layoutY="318.0" text="Điện thoại: " />
-
-   <TextField fx:id="hotenText" disable="true" editable="false" layoutX="223.0" layoutY="38.0" />
-   <TextField fx:id="taikhoanText" layoutX="223.0" layoutY="73.0" disable="true" editable="false"/>
-   <TextField fx:id="diachiText" layoutX="223.0" layoutY="108.0" disable="true" editable="false"/>
-   <TextField fx:id="coquanText" layoutX="223.0" layoutY="143.0" disable="true" editable="false"/>
-   <TextField fx:id="gioitinhText" layoutX="223.0" layoutY="178.0" disable="true" editable="false"/>
-   <TextField fx:id="hochieuText" layoutX="223.0" layoutY="213.0" disable="true" editable="false"/>
-   <TextField fx:id="cmndText" layoutX="223.0" layoutY="248.0" disable="true" editable="false"/>
-   <TextField fx:id="ngaysinhText" layoutX="223.0" layoutY="283.0" disable="true" editable="false"/>
-   <TextField fx:id="dienthoaiText" layoutX="223.0" layoutY="318.0" disable="true" editable="false"/>
+<AnchorPane prefHeight="400.0" prefWidth="455.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.PersonalDetailsController">
+   <children>
+   
+      <Label id="hotenLabel" layoutX="107.0" layoutY="38.0" text="Họ tên: " />
+      <Label id="taikhoanLabel" layoutX="107.0" layoutY="73.0" text="Tài khoản: " />
+      <Label id="diachiLabel" layoutX="107.0" layoutY="108.0" text="Địa chỉ: " />
+      <Label id="coquanLabel" layoutX="107.0" layoutY="143.0" text="Cơ quan: " />
+      <Label id="gioitinhLabel" layoutX="107.0" layoutY="178.0" text="Giới tính: " />
+      <Label id="hochieuLabel" layoutX="107.0" layoutY="213.0" text="Hộ chiếu: " />
+      <Label id="cmndLabel" layoutX="107.0" layoutY="248.0" text="CMND: " />
+      <Label id="ngaysinhLabel" layoutX="107.0" layoutY="283.0" text="Ngày sinh: " />
+      <Label id="dienthoaiLabel" layoutX="107.0" layoutY="318.0" text="Điện thoại: " />
+   
+      <TextField fx:id="hotenText" disable="true" editable="false" layoutX="223.0" layoutY="38.0" />
+      <TextField fx:id="taikhoanText" disable="true" editable="false" layoutX="223.0" layoutY="73.0" />
+      <TextField fx:id="diachiText" disable="true" editable="false" layoutX="223.0" layoutY="108.0" />
+      <TextField fx:id="coquanText" disable="true" editable="false" layoutX="223.0" layoutY="143.0" />
+      <TextField fx:id="gioitinhText" disable="true" editable="false" layoutX="223.0" layoutY="178.0" />
+      <TextField fx:id="hochieuText" disable="true" editable="false" layoutX="223.0" layoutY="213.0" />
+      <TextField fx:id="cmndText" disable="true" editable="false" layoutX="223.0" layoutY="248.0" />
+      <TextField fx:id="ngaysinhText" disable="true" editable="false" layoutX="223.0" layoutY="283.0" />
+      <TextField fx:id="dienthoaiText" disable="true" editable="false" layoutX="223.0" layoutY="318.0" />
+   </children>
 
 <!--   <Button id="okBtn" layoutX="521.0" layoutY="355.0" mnemonicParsing="false" text="OK" onAction="#okBtn"/>-->
 </AnchorPane>

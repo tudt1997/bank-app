@@ -75,8 +75,13 @@ public class SearchController implements Initializable {
 
             tableSearchResult.setOnMouseClicked(event2 -> {
                 if (event2.getClickCount() == 2) {
-                    SearchResult clicked = (SearchResult) tableSearchResult.getSelectionModel().getSelectedItem();
-                    viewDetails(clicked);
+                    System.out.println(tableSearchResult.getSelectionModel().getSelectedIndex());
+                    System.out.println(tableSearchResult.getItems().size());
+                    int index = tableSearchResult.getSelectionModel().getSelectedIndex();
+                    if (index != -1 && index < tableSearchResult.getItems().size()) {
+                        SearchResult clicked = (SearchResult) tableSearchResult.getSelectionModel().getSelectedItem();
+                        viewDetails(clicked);
+                    }
                 }
             });
 
@@ -99,6 +104,7 @@ public class SearchController implements Initializable {
         Parent p = loader.getRoot();
         Stage stage = new Stage();
         stage.setScene(new Scene(p));
+        stage.setResizable(false);
         stage.show();
 
         PersonalDetailsController pd = loader.getController();

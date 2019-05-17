@@ -199,6 +199,7 @@ public class Providers {
             chutaikhoan = rsFullname.getString(1) + " " + rsFullname.getString(2) + " " + rsFullname.getString(3);
 
             returnList.add(new SearchResult(makhoanvay, sotaikhoan, chutaikhoan, sotienvay));
+            System.out.println(makhoanvay + sotaikhoan + chutaikhoan + sotienvay);
         }
         return returnList;
     }
